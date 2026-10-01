@@ -1,0 +1,353 @@
+/**
+ * Floating Sidebar Styles
+ * Makes sidebar overlay on top of content instead of pushing it
+ */
+
+/* ===== Slide-in Sidebar Base ===== */
+.sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: auto !important;
+    width: 320px;
+    max-width: 90vw;
+    height: auto !important;
+    min-height: 200px;
+    max-height: 100vh;
+    max-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: linear-gradient(160deg, rgba(5, 5, 5, 0.98) 0%, rgba(10, 10, 10, 0.95) 100%);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 0 18px 18px 0;
+    border: 1px solid rgba(0, 255, 0, 0.25);
+    border-left: none;
+    box-shadow: 8px 0 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 255, 0, 0.15), inset 0 1px 0 rgba(0, 255, 0, 0.1);
+    z-index: 9999 !important;
+    transform: translateY(-100%);
+    /* Start hidden above the viewport */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* Smooth curtain ease */
+    pointer-events: none;
+}
+
+/* When sidebar is open/visible */
+.sidebar.open {
+    transform: translateY(0) !important;
+    /* Slide down into view */
+    pointer-events: auto !important;
+}
+
+
+
+/* Force Toggler Visibility */
+.sidebar-toggler {
+    display: inline-flex !important;
+}
+
+/* ===== Content - Full Width Always ===== */
+.content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    min-height: 100vh;
+    background: var(--dark);
+    transition: none;
+}
+
+/* No dimming effect for dropdown style */
+.content.sidebar-active {
+    filter: none;
+    pointer-events: auto;
+}
+
+/* ===== Overlay Backdrop - Subtle Dimming ===== */
+.sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 1040;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.sidebar-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ===== Sidebar Header Enhancement ===== */
+.sidebar .navbar-brand {
+    display: flex;
+    align-items: center;
+    padding: 0.85rem 1.2rem;
+    border-bottom: 1px solid rgba(0, 255, 0, 0.2);
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.05) 0%, rgba(0, 255, 0, 0.02) 100%);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.sidebar .navbar-brand:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.08) 0%, rgba(0, 255, 0, 0.04) 100%);
+    border-bottom-color: rgba(0, 255, 0, 0.3);
+}
+
+.sidebar .navbar-brand h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    color: #00ff00;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.4);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.sidebar .navbar-brand i {
+    color: #00ff00;
+    margin-right: 0.5rem;
+    font-size: 1.15rem;
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+}
+
+/* ===== Close Button for Sidebar ===== */
+.sidebar-close {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    right: auto;
+    width: 30px;
+    height: 30px;
+    display: none;
+    /* Hidden by default, cleaner look */
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 68, 68, 0.12);
+    border: 1px solid rgba(255, 68, 68, 0.35);
+    border-radius: 50%;
+    color: #ff4444;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    font-size: 0.85rem;
+}
+
+/* Show close button only on mobile or if needed */
+@media (max-width: 991.98px) {
+    .sidebar-close {
+        display: flex;
+    }
+}
+
+
+
+.sidebar-close:hover {
+    background: rgba(255, 68, 68, 0.25);
+    border-color: rgba(255, 68, 68, 0.5);
+    transform: rotate(90deg) scale(1.1);
+    box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+}
+
+/* ===== Sidebar Navigation Items ===== */
+.sidebar .navbar-nav {
+    padding: 0.5rem 0.75rem;
+}
+
+.sidebar .navbar-nav .nav-link {
+    padding: 0.65rem 1rem;
+    margin-bottom: 0.35rem;
+    color: rgba(255, 255, 255, 0.75) !important;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: 12px;
+    border-left: 3px solid transparent;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.sidebar .navbar-nav .nav-link::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, rgba(0, 255, 0, 0.1) 0%, transparent 100%);
+    transition: width 0.3s ease;
+}
+
+.sidebar .navbar-nav .nav-link:hover {
+    color: #00ff00 !important;
+    background: rgba(0, 255, 0, 0.08);
+    border-left-color: rgba(0, 255, 0, 0.5);
+    transform: translateX(3px);
+}
+
+.sidebar .navbar-nav .nav-link:hover::before {
+    width: 100%;
+}
+
+.sidebar .navbar-nav .nav-link.active {
+    color: #00ff00 !important;
+    background: linear-gradient(90deg, rgba(0, 255, 0, 0.15) 0%, rgba(0, 255, 0, 0.05) 100%);
+    border-left-color: #00ff00;
+    box-shadow: 0 2px 8px rgba(0, 255, 0, 0.15);
+    font-weight: 600;
+}
+
+.sidebar .navbar-nav .nav-link i {
+    width: 20px;
+    text-align: left;
+    margin-right: 0.75rem;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.sidebar .navbar-nav .nav-link:hover i,
+.sidebar .navbar-nav .nav-link.active i {
+    transform: scale(1.15);
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+}
+
+/* ===== Dropdown Menu in Sidebar ===== */
+.sidebar .dropdown-menu {
+    background: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(0, 255, 0, 0.15);
+    border-radius: 10px;
+    padding: 0.5rem;
+    margin-top: 0.25rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar .dropdown-item {
+    padding: 0.55rem 0.85rem;
+    color: rgba(255, 255, 255, 0.7) !important;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    margin-bottom: 0.2rem;
+}
+
+.sidebar .dropdown-item:hover {
+    background: rgba(0, 255, 0, 0.1) !important;
+    color: #00ff00 !important;
+    transform: translateX(5px);
+}
+
+.sidebar .dropdown-item i {
+    width: 18px;
+    text-align: left;
+    margin-right: 0.6rem;
+    font-size: 0.85rem;
+}
+
+.sidebar .dropdown-divider {
+    border-top: 1px solid rgba(0, 255, 0, 0.15);
+    margin: 0.4rem 0;
+}
+
+/* Scrollbar Styling */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 0, 0.3) rgba(0, 0, 0, 0.3);
+}
+
+.sidebar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 0, 0.3);
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 0, 0.5);
+}
+
+/* ===== Responsive Improvements ===== */
+@media (max-width: 575.98px) {
+    .sidebar {
+        width: 85%;
+        max-width: 320px;
+        /* Increased from 260px */
+        top: 0;
+        left: 0;
+        right: auto;
+        height: 100vh;
+    }
+
+    .sidebar .navbar-brand {
+        padding: 0.7rem 1rem;
+    }
+
+    .sidebar .navbar-brand h3 {
+        font-size: 1rem;
+    }
+
+    .sidebar .navbar-nav .nav-link {
+        padding: 0.6rem 0.85rem;
+        font-size: 0.85rem;
+    }
+}
+
+/* ===== Smooth Dropdown Animation ===== */
+.sidebar .dropdown-menu {
+    animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===== Active State Indicator ===== */
+.sidebar .navbar-nav .nav-link.active::after {
+    content: '';
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background: #00ff00;
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+    animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.7;
+        transform: translateY(-50%) scale(1.2);
+    }
+}

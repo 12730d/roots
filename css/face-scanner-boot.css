@@ -1,0 +1,239 @@
+/*
+ * FACE SCANNER BOOT — MILITARY ARMY/TACTICAL INTERFACE
+ * Military Terminal Style - Phosphor Green
+ */
+
+#faceScannerOverlay {
+    position: fixed;
+    inset: 0;
+    background: #0a0a0a;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    overflow: hidden;
+    transition: opacity 0.5s ease;
+    border: 2px solid #33aa33;
+}
+
+#faceScannerOverlay.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* ─── HUD container ─── */
+.boot-hud {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    max-width: 440px;
+    padding: 20px;
+}
+
+/* ─── Scanner frame ─── */
+.scan-frame {
+    position: relative;
+    width: 200px;
+    height: 200px;
+}
+
+/* Corner brackets — military green */
+.scan-frame::before,
+.scan-frame::after,
+.scan-frame .c-br,
+.scan-frame .c-bl {
+    content: '';
+    position: absolute;
+    width: 22px; height: 22px;
+    border-style: solid;
+    border-color: #00ff41;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+}
+.scan-frame::before { top: 0; left: 0;  border-width: 1px 0 0 1px; }
+.scan-frame::after  { top: 0; right: 0; border-width: 1px 1px 0 0; }
+.scan-frame .c-br   { position: absolute; bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+.scan-frame .c-bl   { position: absolute; bottom: 0; left: 0;  border-width: 0 0 1px 1px; }
+
+/* Face SVG area */
+.scan-face-area {
+    position: absolute;
+    inset: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+
+.scan-face-area svg {
+    width: 120px; height: 120px;
+    opacity: .2;
+}
+
+/* Grid overlay */
+.scan-grid {
+    position: absolute; inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 20px 20px;
+    pointer-events: none;
+}
+
+/* Scan line — military green phosphor */
+.scan-line {
+    position: absolute;
+    left: 0; right: 0;
+    height: 1px;
+    background: rgba(0, 255, 65, 0.4);
+    animation: scan-sweep 2s ease-in-out infinite;
+    box-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+}
+
+@keyframes scan-sweep {
+    0%   { top: 0%;   opacity: .6; }
+    48%  { top: 100%; opacity: .6; }
+    50%  { top: 100%; opacity: 0; }
+    52%  { top: 0%;   opacity: 0; }
+    54%  { top: 0%;   opacity: .6; }
+    100% { top: 100%; opacity: .6; }
+}
+
+/* Dot markers — military green */
+.scan-dot {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #00ff41;
+    animation: dot-pulse 2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+}
+.scan-dot.d1 { top: 28%; left: 22%; animation-delay: 0s; }
+.scan-dot.d2 { top: 24%; right: 22%; animation-delay: .5s; }
+.scan-dot.d3 { bottom: 28%; left: 24%; animation-delay: 1s; }
+.scan-dot.d4 { bottom: 24%; right: 24%; animation-delay: 1.5s; }
+
+@keyframes dot-pulse {
+    0%,100% { opacity: .7; }
+    50% { opacity: .1; }
+}
+
+/* ─── Status text ─── */
+.boot-title {
+    font-size: .6rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #00ff41;
+    text-align: center;
+    margin-bottom: 6px;
+    text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+    font-weight: 700;
+}
+
+.boot-msg {
+    font-size: .75rem;
+    letter-spacing: 1.5px;
+    color: #00cc33;
+    text-align: center;
+    min-height: 20px;
+    transition: color .3s;
+    text-shadow: 0 0 5px rgba(0, 255, 65, 0.6);
+}
+
+.boot-msg.ok  { color: #00ff41; text-shadow: 0 0 15px rgba(0, 255, 65, 1); }
+.boot-msg.err { color: #ff4141; text-shadow: 0 0 15px rgba(255, 65, 65, 1); }
+
+/* ─── Progress ─── */
+.boot-prog-wrap {
+    width: 100%;
+    max-width: 300px;
+    height: 1px;
+    background: #232323;
+}
+.boot-prog-bar {
+    height: 100%;
+    background: #4a4a4a;
+    width: 0%;
+    transition: width .3s ease;
+}
+
+/* ─── Log ─── */
+.boot-log {
+    width: 100%;
+    max-width: 340px;
+    max-height: 80px;
+    overflow: hidden;
+}
+
+.boot-log-line {
+    font-size: .58rem;
+    color: #424242;
+    letter-spacing: .5px;
+    line-height: 1.7;
+    opacity: 0;
+    animation: log-in .25s ease forwards;
+}
+.boot-log-line.ok::before   { content: '[+] '; color: #505050; }
+.boot-log-line.info::before { content: '[>] '; color: #424242; }
+.boot-log-line.warn::before { content: '[!] '; color: #4a4030; }
+.boot-log-line.err::before  { content: '[x] '; color: #4a3535; }
+
+@keyframes log-in { to { opacity: 1; } }
+
+/* ─── Retry btn ─── */
+.boot-retry {
+    background: transparent;
+    border: 1px solid #363636;
+    color: #5e5e5e;
+    font-family: inherit;
+    font-size: .6rem;
+    padding: 6px 18px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    display: none;
+    transition: border-color .2s, color .2s;
+}
+.boot-retry:hover { border-color: #5e5e5e; color: #808080; }
+
+/* ─── Skip btn (admin) ─── */
+.boot-skip {
+    position: absolute;
+    bottom: 16px; right: 16px;
+    background: transparent;
+    border: 1px solid #282828;
+    color: #383838;
+    font-family: inherit;
+    font-size: .55rem;
+    padding: 3px 8px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: color .2s;
+}
+.boot-skip:hover { color: #505050; border-color: #404040; }
+
+/* ─── Corner info ─── */
+.hud-info {
+    position: absolute;
+    font-size: .52rem;
+    color: #2a2a2a;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    text-transform: uppercase;
+}
+.hud-info.tl { top: 16px; left: 16px; }
+.hud-info.tr { top: 16px; right: 16px; text-align: right; }
+.hud-info.bl { bottom: 48px; left: 16px; }
+.hud-info.br { bottom: 48px; right: 16px; text-align: right; }
+
+/* ─── Center crosshair lines ─── */
+.scan-cross-h,
+.scan-cross-v {
+    position: absolute;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+}
+.scan-cross-h { height: 1px; left: 0; right: 0; top: 50%; }
+.scan-cross-v { width: 1px;  top: 0; bottom: 0; left: 50%; }

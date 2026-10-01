@@ -1,0 +1,43 @@
+/**
+ * CSS Variables - Design Tokens
+ * 
+ * This file contains all CSS variables used across the project.
+ * Centralizing variables makes it easier to maintain consistent styling.
+ */
+
+:root {
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 16px;
+    --spacing-xl: 20px;
+    --spacing-2xl: 24px;
+
+    /* Typography */
+    --font-size-xs: 0.58rem;
+    --font-size-sm: 0.62rem;
+    --font-size-base: 0.7rem;
+    --font-size-md: 0.8rem;
+    --font-size-lg: 1rem;
+    --font-size-xl: 1.15rem;
+    --font-size-2xl: 1.65rem;
+
+    /* Border Radius */
+    --radius-sm: 3px;
+    --radius-md: 6px;
+    --radius-lg: 12px;
+    --radius-full: 999px;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.2s ease;
+    --transition-slow: 0.3s ease;
+
+    /* Shadows */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 16px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.45);
+    --shadow-glow: var(--term-glow);
+    --shadow-glow-cyan: var(--term-glow-cyan);
+}

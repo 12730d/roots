@@ -1,0 +1,328 @@
+/* ============================================================================
+   ENHANCED USER PROFILE DROPDOWN - PROFESSIONAL & CLEAN DESIGN
+   ============================================================================ */
+
+.user-profile-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* ============================================================================
+   PROFILE BUTTON - CLEAN DESIGN
+   ============================================================================ */
+
+.bc-user__trigger--profile {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem !important;
+    background: transparent !important;
+    border: 1px solid rgba(46, 204, 113, 0.3) !important;
+    border-radius: 6px !important;
+    transition: all 0.3s ease !important;
+    color: #2ecc71 !important;
+    height: auto;
+}
+
+.bc-user__trigger--profile:hover {
+    border-color: rgba(46, 204, 113, 0.6) !important;
+    background: rgba(46, 204, 113, 0.05) !important;
+    box-shadow: 0 0 10px rgba(46, 204, 113, 0.15) !important;
+}
+
+.bc-user__trigger--profile:focus {
+    outline: none;
+    border-color: #2ecc71 !important;
+    box-shadow: 0 0 12px rgba(46, 204, 113, 0.3) !important;
+}
+
+.bc-user__trigger--profile[aria-expanded="true"] {
+    border-color: rgba(46, 204, 113, 0.7) !important;
+    background: rgba(46, 204, 113, 0.08) !important;
+}
+
+/* ============================================================================
+   AVATAR CONTAINER - CLEAN STYLE
+   ============================================================================ */
+
+.user-avatar-container {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.user-avatar-clean {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5px solid rgba(46, 204, 113, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.user-avatar-clean img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-avatar-clean .user-initial {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #2ecc71;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.bc-user__trigger--profile:hover .user-avatar-clean {
+    border-color: rgba(46, 204, 113, 0.7);
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+}
+
+/* ============================================================================
+   USER INFO - SIMPLIFIED LAYOUT
+   ============================================================================ */
+
+.user-info-clean {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.25rem;
+    min-width: 0;
+}
+
+.user-name-clean {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #2ecc71;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.3px;
+}
+
+.user-tier-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: rgba(76, 220, 130, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.85;
+}
+
+/* Subscription Tier Colors */
+.user-profile-wrapper[data-subscription="vip"] .user-tier-badge,
+.user-profile-wrapper[data-subscription="vip"] .user-name-clean {
+    color: #FFD700;
+}
+
+.user-profile-wrapper[data-subscription="elite"] .user-tier-badge,
+.user-profile-wrapper[data-subscription="elite"] .user-name-clean {
+    color: #FF6B9D;
+}
+
+.user-profile-wrapper[data-subscription="premium"] .user-tier-badge,
+.user-profile-wrapper[data-subscription="premium"] .user-name-clean {
+    color: #00D9FF;
+}
+
+/* ============================================================================
+   DROPDOWN ICON
+   ============================================================================ */
+
+.user-dropdown-icon {
+    font-size: 0.75rem;
+    color: rgba(46, 204, 113, 0.6);
+    transition: transform 0.3s ease, color 0.3s ease;
+    flex-shrink: 0;
+}
+
+.bc-user__trigger--profile:hover .user-dropdown-icon {
+    color: #2ecc71;
+}
+
+.bc-user__trigger--profile[aria-expanded="true"] .user-dropdown-icon {
+    transform: rotate(180deg);
+    color: #2ecc71;
+}
+
+/* ============================================================================
+   DROPDOWN MENU - PROFESSIONAL DESIGN
+   ============================================================================ */
+
+.bc-user__menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 220px;
+    margin-top: 0.5rem;
+    background: rgba(0, 15, 0, 0.95);
+    border: 1px solid rgba(46, 204, 113, 0.3);
+    border-radius: 6px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(46, 204, 113, 0.1);
+    backdrop-filter: blur(10px);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+    z-index: 1050;
+}
+
+.bc-user__menu[aria-hidden="false"] {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* ============================================================================
+   MENU HEADER
+   ============================================================================ */
+
+.user-menu-header {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid rgba(46, 204, 113, 0.2);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.user-menu-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #2ecc71;
+    text-transform: capitalize;
+}
+
+.user-menu-balance {
+    font-size: 0.8rem;
+    color: rgba(76, 220, 130, 0.85);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.user-menu-balance i {
+    opacity: 0.8;
+}
+
+/* ============================================================================
+   MENU ITEMS
+   ============================================================================ */
+
+.bc-user__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.7rem 1rem;
+    color: rgba(76, 220, 130, 0.85);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border-left: 2px solid transparent;
+}
+
+.bc-user__item:hover {
+    background: rgba(46, 204, 113, 0.08);
+    border-left-color: #2ecc71;
+    color: #2ecc71;
+    padding-left: calc(1rem + 2px);
+}
+
+.bc-user__item i {
+    width: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.8;
+}
+
+.bc-user__item:hover i {
+    opacity: 1;
+}
+
+.bc-user__item--danger {
+    color: rgba(255, 100, 100, 0.85);
+    border-left-color: transparent;
+}
+
+.bc-user__item--danger:hover {
+    background: rgba(255, 100, 100, 0.1);
+    border-left-color: #ff6464;
+    color: #ff6464;
+}
+
+/* ============================================================================
+   MENU DIVIDER
+   ============================================================================ */
+
+.bc-user__divider {
+    margin: 0.5rem 0;
+    border: none;
+    border-top: 1px solid rgba(46, 204, 113, 0.15);
+    height: 0;
+}
+
+/* ============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================ */
+
+@media (max-width: 768px) {
+    .bc-user__trigger--profile {
+        padding: 0.5rem !important;
+        gap: 0.5rem !important;
+    }
+
+    .user-avatar-clean {
+        width: 32px;
+        height: 32px;
+    }
+
+    .user-name-clean {
+        font-size: 0.85rem;
+    }
+
+    .user-tier-badge {
+        font-size: 0.65rem;
+    }
+
+    .bc-user__menu {
+        min-width: 200px;
+    }
+
+    .user-dropdown-icon {
+        font-size: 0.65rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .user-name-clean {
+        max-width: 80px;
+    }
+
+    .bc-user__trigger--profile {
+        gap: 0.3rem !important;
+        padding: 0.4rem !important;
+    }
+
+    .user-info-clean {
+        gap: 0.1rem;
+    }
+}
+
+/* ============================================================================
+   ACCESSIBILITY
+   ============================================================================ */
+
+.bc-user__trigger--profile:focus-visible {
+    outline: 2px solid #2ecc71;
+    outline-offset: 2px;
+}
+
+.bc-user__item:focus-visible {
+    outline: 2px solid rgba(46, 204, 113, 0.5);
+    outline-offset: -2px;
+}

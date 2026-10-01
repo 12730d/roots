@@ -1,0 +1,42 @@
+/**
+ * Terminal Theme Variables
+ * 
+ * Centralized CSS variables for terminal-themed components.
+ * Import this file before any component CSS that uses --term-* variables.
+ */
+
+:root {
+    color-scheme: dark;
+
+    /* Terminal Colors */
+    --term-green: #00ff41;
+    --term-green-bright: #39ff14;
+    --term-cyan: #00e5ff;
+    --term-cyan-dim: #00a8b8;
+    --term-dim: #008f11;
+    --term-bg: #060a08;
+    
+    /* Panel & Border Colors */
+    --term-panel: rgba(10, 14, 12, 0.94);
+    --term-panel-border: rgba(0, 255, 65, 0.2);
+    
+    /* Glow Effects */
+    --term-glow: 0 0 8px rgba(0, 255, 65, 0.22);
+    --term-glow-cyan: 0 0 6px rgba(0, 229, 255, 0.18);
+    
+    /* Status Colors */
+    --term-red: #ff5555;
+    --term-amber: #ffaa00;
+    --term-gold: #fbbf24;
+    
+    /* Typography */
+    --term-font: "JetBrains Mono", "Share Tech Mono", "Courier New", monospace;
+    
+    /* UI Elements */
+    --term-titlebar: #0c100e;
+    --term-radius: 6px;
+    
+    /* Layout */
+    --content-max: 72rem;
+    --plans-max: 96rem;
+}

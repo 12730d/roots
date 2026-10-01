@@ -1,0 +1,568 @@
+/* 
+ * Screen Resolutions & Border Radius CSS
+ * ملف مخصص للتعامل مع زوايا الصفحة وأحجام الشاشات المختلفة
+ * استخدم هذا الملف لأي صفحة بها مشكلة في الزوايا والاستجابة
+ */
+
+/* ============================================
+   متغيرات CSS - CSS Variables
+   ============================================ */
+:root {
+  /* Border Radius Sizes */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 20px;
+  --radius-3xl: 24px;
+  --radius-full: 50%;
+  
+  /* Page Max Width */
+  --page-max-width: 1200px;
+  --page-padding: 16px;
+  
+  /* Transitions */
+  --transition-smooth: all 0.3s ease-in-out;
+}
+
+/* ============================================
+   1. فئات الزوايا المستديرة - Rounded Corners
+   ============================================ */
+
+/* Small Radius */
+.rounded-sm {
+  border-radius: var(--radius-sm);
+}
+
+.rounded-sm-top {
+  border-top-left-radius: var(--radius-sm);
+  border-top-right-radius: var(--radius-sm);
+}
+
+.rounded-sm-bottom {
+  border-bottom-left-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+.rounded-sm-left {
+  border-top-left-radius: var(--radius-sm);
+  border-bottom-left-radius: var(--radius-sm);
+}
+
+.rounded-sm-right {
+  border-top-right-radius: var(--radius-sm);
+  border-bottom-right-radius: var(--radius-sm);
+}
+
+/* Medium Radius */
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+
+.rounded-md-top {
+  border-top-left-radius: var(--radius-md);
+  border-top-right-radius: var(--radius-md);
+}
+
+.rounded-md-bottom {
+  border-bottom-left-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.rounded-md-left {
+  border-top-left-radius: var(--radius-md);
+  border-bottom-left-radius: var(--radius-md);
+}
+
+.rounded-md-right {
+  border-top-right-radius: var(--radius-md);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+/* Large Radius */
+.rounded-lg {
+  border-radius: var(--radius-lg);
+}
+
+.rounded-lg-top {
+  border-top-left-radius: var(--radius-lg);
+  border-top-right-radius: var(--radius-lg);
+}
+
+.rounded-lg-bottom {
+  border-bottom-left-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+.rounded-lg-left {
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
+}
+
+.rounded-lg-right {
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+/* Extra Large Radius */
+.rounded-xl {
+  border-radius: var(--radius-xl);
+}
+
+.rounded-2xl {
+  border-radius: var(--radius-2xl);
+}
+
+.rounded-3xl {
+  border-radius: var(--radius-3xl);
+}
+
+/* Full Circle */
+.rounded-full {
+  border-radius: var(--radius-full);
+}
+
+/* Individual Corners */
+.rounded-tl {
+  border-top-left-radius: var(--radius-lg);
+}
+
+.rounded-tr {
+  border-top-right-radius: var(--radius-lg);
+}
+
+.rounded-bl {
+  border-bottom-left-radius: var(--radius-lg);
+}
+
+.rounded-br {
+  border-bottom-right-radius: var(--radius-lg);
+}
+
+/* ============================================
+   2. فئات تصحيح الزوايا - Radius Fixes
+   ============================================ */
+
+.fix-page-radius {
+  border-radius: var(--radius-lg) !important;
+}
+
+.fix-container-radius {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+.fix-card-radius {
+  border-radius: var(--radius-xl) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.fix-modal-radius {
+  border-radius: var(--radius-2xl) !important;
+  overflow: hidden;
+}
+
+.fix-button-radius {
+  border-radius: var(--radius-md) !important;
+  overflow: hidden;
+}
+
+.fix-input-radius {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* ============================================
+   3. Page Size & Layout Fixes
+   ============================================ */
+
+.page-wrapper {
+  width: 100%;
+  max-width: var(--page-max-width);
+  margin: 0 auto;
+  padding: var(--page-padding);
+  box-sizing: border-box;
+}
+
+.container-fluid-fixed {
+  width: 100%;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+.full-width {
+  width: 100% !important;
+}
+
+.full-height {
+  height: 100% !important;
+}
+
+/* ============================================
+   4. شاشات صغيرة جداً (Extra Small)
+   Mobile: < 480px
+   ============================================ */
+@media screen and (max-width: 479px) {
+  :root {
+    --radius-lg: 8px;
+    --radius-xl: 12px;
+    --page-padding: 12px;
+  }
+  
+  body, html {
+    font-size: 14px;
+  }
+  
+  .container {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  
+  .rounded-2xl,
+  .rounded-3xl {
+    border-radius: var(--radius-lg) !important;
+  }
+}
+
+/* ============================================
+   5. شاشات صغيرة (Small Mobile)
+   Mobile: 480px - 576px
+   ============================================ */
+@media screen and (min-width: 480px) and (max-width: 576px) {
+  :root {
+    --radius-lg: 10px;
+    --radius-xl: 14px;
+    --page-padding: 12px;
+  }
+  
+  body, html {
+    font-size: 15px;
+  }
+  
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+}
+
+/* ============================================
+   6. شاشات متوسطة (Portrait Tablets)
+   Tablet: 576px - 768px
+   ============================================ */
+@media screen and (min-width: 576px) and (max-width: 768px) {
+  :root {
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --page-padding: 16px;
+  }
+  
+  body, html {
+    font-size: 15px;
+  }
+  
+  .container {
+    max-width: 540px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .row {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+/* ============================================
+   7. شاشات متوسطة كبيرة (Landscape Tablets)
+   Tablet: 768px - 992px
+   ============================================ */
+@media screen and (min-width: 768px) and (max-width: 992px) {
+  :root {
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --page-max-width: 750px;
+    --page-padding: 16px;
+  }
+  
+  body, html {
+    font-size: 16px;
+  }
+  
+  .container {
+    max-width: 720px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .row {
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+}
+
+/* ============================================
+   8. شاشات كبيرة (Desktop)
+   Desktop: 992px - 1200px
+   ============================================ */
+@media screen and (min-width: 992px) and (max-width: 1200px) {
+  :root {
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --page-max-width: 960px;
+    --page-padding: 20px;
+  }
+  
+  body, html {
+    font-size: 16px;
+  }
+  
+  .container {
+    max-width: 960px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* ============================================
+   9. شاشات كبيرة جداً (Large Desktop)
+   Desktop: 1200px - 1400px
+   ============================================ */
+@media screen and (min-width: 1200px) and (max-width: 1400px) {
+  :root {
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --page-max-width: 1140px;
+    --page-padding: 20px;
+  }
+  
+  .container {
+    max-width: 1140px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* ============================================
+   10. شاشات كبيرة جداً جداً (Extra Large Desktop)
+   Desktop: > 1400px
+   ============================================ */
+@media screen and (min-width: 1400px) {
+  :root {
+    --radius-lg: 14px;
+    --radius-xl: 18px;
+    --page-max-width: 1320px;
+    --page-padding: 24px;
+  }
+  
+  .container {
+    max-width: 1320px;
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* ============================================
+   11. فئات مساعدة للعرض - Display Helpers
+   ============================================ */
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.overflow-auto {
+  overflow: auto;
+}
+
+.overflow-scroll {
+  overflow: scroll;
+}
+
+.box-sizing-border {
+  box-sizing: border-box;
+}
+
+.transform-smooth {
+  transition: var(--transition-smooth);
+}
+
+/* ============================================
+   12. إصلاحات شاملة - Complete Fixes
+   ============================================ */
+
+/* تطبيق الزوايا على جميع العناصر الرئيسية */
+.page-container,
+main,
+.main-content,
+.content-wrapper {
+  border-radius: var(--radius-lg);
+}
+
+/* إصلاح جميع الـ Cards */
+.card,
+[class*="card-"],
+.panel,
+.box,
+.container-fluid {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+/* إصلاح جميع الـ Forms */
+form,
+.form-group,
+.form-container {
+  border-radius: var(--radius-md) !important;
+}
+
+/* إصلاح جميع الـ Buttons */
+button,
+.btn,
+[class*="btn-"],
+input[type="button"],
+input[type="submit"],
+input[type="reset"] {
+  border-radius: var(--radius-md) !important;
+}
+
+/* إصلاح جميع الـ Inputs */
+input,
+textarea,
+select,
+.form-control,
+.input-field {
+  border-radius: var(--radius-sm) !important;
+}
+
+/* إصلاح جميع الـ Images */
+img,
+.img-rounded,
+[class*="image-"] {
+  border-radius: var(--radius-md) !important;
+}
+
+/* إصلاح جميع الـ Tables */
+table,
+.table,
+.data-table {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+}
+
+table thead,
+.table thead {
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0 !important;
+}
+
+table tbody,
+.table tbody {
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg) !important;
+}
+
+/* ============================================
+   13. فئات التصحيح السريع - Quick Fix Classes
+   ============================================ */
+
+.fix-radius {
+  border-radius: var(--radius-lg) !important;
+}
+
+.fix-top-left {
+  border-top-left-radius: var(--radius-lg) !important;
+}
+
+.fix-top-right {
+  border-top-right-radius: var(--radius-lg) !important;
+}
+
+.fix-bottom-left {
+  border-bottom-left-radius: var(--radius-lg) !important;
+}
+
+.fix-bottom-right {
+  border-bottom-right-radius: var(--radius-lg) !important;
+}
+
+/* ============================================
+   14. الحد الأدنى والأقصى - Min/Max Widths
+   ============================================ */
+
+.min-width-full {
+  min-width: 100%;
+}
+
+.max-width-full {
+  max-width: 100%;
+}
+
+.min-width-screen {
+  min-width: 100vw;
+}
+
+.max-width-screen {
+  max-width: 100vw;
+}
+
+/* ============================================
+   Print Styles
+   ============================================ */
+@media print {
+  .page-wrapper,
+  .container {
+    border-radius: 0 !important;
+  }
+  
+  * {
+    box-shadow: none !important;
+  }
+}
+
+/* ============================================
+   RTL Support (العربية)
+   ============================================ */
+[dir="rtl"] .rounded-left {
+  border-top-right-radius: var(--radius-lg);
+  border-bottom-right-radius: var(--radius-lg);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+[dir="rtl"] .rounded-right {
+  border-top-left-radius: var(--radius-lg);
+  border-bottom-left-radius: var(--radius-lg);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+/* ============================================
+   15. منع التمرير وتثبيت حجم الشاشة - No Scroll & Full Screen
+   ============================================ */
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  max-width: 100%;
+  overflow: hidden; /* يمنع التمرير */
+  box-sizing: border-box;
+}
+
+/* فئة يمكن إضافتها للعناصر التي يجب أن تملأ الشاشة تماماً */
+.screen-fit {
+  width: 100vw !important;
+  height: 100vh !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  overflow: hidden !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* السماح بالتمرير الداخلي فقط للعناصر المحددة إذا كان محتواها طويلاً */
+.scrollable-content {
+  overflow-y: auto !important;
+  height: 100%;
+}

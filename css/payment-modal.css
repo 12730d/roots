@@ -1,0 +1,985 @@
+/**
+ * Payment Modal Styles v5.0 - Professional Secure Edition
+ * Features:
+ * - Professional, calm design for secure payments
+ * - Modern security-focused interface
+ * - Enhanced accessibility and readability
+ * - Optimized performance with minimal effects
+ * - Responsive design for all devices
+ * - Eye-friendly color scheme
+ */
+
+/* CSS Variables - Professional Theme */
+:root {
+    --pm-primary: #19b03a;
+    --pm-primary-dark: #127033;
+    --pm-primary-light: #2ecf11;
+    --pm-dark-bg: #0a0f0a;
+    --pm-card-bg: rgba(10, 20, 10, 0.95);
+    --pm-border: #19b03a;
+    --pm-input-bg: rgba(0, 30, 0, 0.9);
+    --pm-text-white: #19b03a;
+    --pm-text-muted: #008f11;
+    --pm-success: #19b03a;
+    --pm-danger: #d9534f;
+    --pm-warning: #f0ad4e;
+    --pm-info: #00e5ff;
+    --pm-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    --pm-shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.3);
+    --pm-glow: none;
+    --pm-transition: all 0.2s ease-in-out;
+}
+
+/* Modal Overrides */
+.payment-modal-content {
+    background-color: var(--pm-dark-bg);
+    color: var(--pm-text-white);
+    box-shadow: var(--pm-shadow-lg);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.payment-modal-content .modal-header {
+    background: rgba(10, 20, 10, 0.95);
+    border-bottom: 1px solid var(--pm-border);
+}
+
+.payment-modal-content .modal-header .btn-close {
+    filter: brightness(0) invert(1);
+    opacity: 0.7;
+}
+
+.payment-modal-content .modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+/* Form Controls */
+#paymentModal .form-control {
+    background-color: var(--pm-input-bg);
+    border: 1px solid var(--pm-border);
+    color: var(--pm-text-white) !important;
+}
+
+#paymentModal .form-control:focus {
+    background-color: var(--pm-input-bg);
+    color: var(--pm-text-white) !important;
+    border-color: var(--pm-primary);
+    box-shadow: 0 0 0 0.2rem rgba(25, 176, 58, 0.15);
+}
+
+#paymentModal .form-control::placeholder {
+    color: #6c757d;
+    opacity: 1;
+}
+
+#paymentModal .form-control:disabled,
+#paymentModal .form-control[readonly] {
+    background-color: #0a0a0a;
+    color: #e0e0e0 !important;
+    opacity: 1;
+    cursor: not-allowed;
+}
+
+/* Enhanced Progress Steps */
+.progress-steps-enhanced {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.step-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    position: relative;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.step-item:hover {
+    opacity: 0.8;
+}
+
+.step-item.active,
+.step-item.completed {
+    opacity: 1;
+}
+
+.step-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2a2a2a;
+    border: 2px solid #444;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    z-index: 2;
+    color: white;
+    position: relative;
+}
+
+.step-item.active .step-circle {
+    background: var(--pm-primary);
+    border-color: var(--pm-primary);
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(25, 176, 58, 0.3);
+}
+
+.step-item.completed .step-circle {
+    background: var(--pm-success);
+    border-color: var(--pm-success);
+    color: white;
+    box-shadow: 0 2px 6px rgba(92, 184, 92, 0.3);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.8;
+    }
+}
+
+.step-check {
+    display: none;
+}
+
+.step-item.completed .step-number {
+    display: none;
+}
+
+.step-item.completed .step-check {
+    display: block;
+    font-size: 0.9rem;
+    animation: checkmark 0.3s ease;
+}
+
+@keyframes checkmark {
+    0% {
+        transform: scale(0);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.step-content {
+    margin-left: 12px;
+}
+
+.step-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.step-line {
+    flex: 1;
+    height: 3px;
+    background: #333;
+    margin: 0 15px;
+    border-radius: 2px;
+}
+
+.step-item.completed .step-line {
+    background: linear-gradient(90deg, var(--pm-success), var(--pm-primary));
+}
+
+/* Crypto Selection Cards */
+.crypto-selection-card {
+    background: var(--pm-card-bg);
+    border: 2px solid transparent;
+    border-radius: 16px;
+    padding: 2rem;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.crypto-selection-card::before {
+    display: none;
+}
+
+.crypto-selection-card.selected {
+    border-color: var(--pm-primary);
+    background: rgba(25, 176, 58, 0.1);
+}
+
+
+.crypto-details {
+    margin-top: 1rem;
+}
+
+.select-indicator {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    color: var(--pm-primary);
+    opacity: 0;
+    background: rgba(25, 176, 58, 0.15);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.crypto-selection-card.selected .select-indicator {
+    opacity: 1;
+}
+
+/* Timer Badge */
+.timer-badge {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--pm-border);
+    border-radius: 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 1.3rem;
+    font-weight: 700;
+    background: var(--pm-input-bg);
+    color: var(--pm-text-white);
+}
+
+.timer-badge.text-danger {
+    color: var(--pm-danger);
+}
+
+@keyframes timerUrgent {
+    0%, 100% {
+        border-color: var(--pm-danger);
+    }
+    50% {
+        border-color: #ff6b6b;
+    }
+}
+
+/* Package Info Section */
+.package-info-section {
+    padding: 1.5rem;
+    background: rgba(25, 176, 58, 0.08);
+    border-radius: 12px;
+    border: 1px solid var(--pm-border);
+    transition: var(--pm-transition);
+}
+
+.package-info-section:hover {
+    border-color: var(--pm-primary-light);
+    background: rgba(25, 176, 58, 0.12);
+}
+
+.selected-package-name {
+    font-size: 1.2rem;
+    color: var(--pm-primary);
+    font-weight: 600;
+}
+
+.package-price-display {
+    padding: 1.5rem;
+    background: rgba(25, 176, 58, 0.1);
+    border-radius: 12px;
+    border: 2px solid var(--pm-border);
+    position: relative;
+    overflow: hidden;
+}
+
+.package-price-display::before {
+    display: none;
+}
+
+
+.divider-line {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--pm-border), var(--pm-primary), var(--pm-border), transparent);
+    border-radius: 2px;
+    position: relative;
+}
+
+.divider-line::after {
+    display: none;
+}
+
+
+.amount-display {
+    padding: 1.5rem;
+    background: rgba(25, 176, 58, 0.08);
+    border-radius: 12px;
+    border: 1px solid var(--pm-border);
+    transition: var(--pm-transition);
+}
+
+.amount-display:hover {
+    background: rgba(25, 176, 58, 0.12);
+    border-color: var(--pm-primary-light);
+}
+
+/* Payment Summary Card */
+.payment-summary-card {
+    position: relative;
+    overflow: hidden;
+    transition: var(--pm-transition);
+}
+
+.payment-summary-card:hover {
+    transform: translateY(-2px);
+}
+
+.payment-summary-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--pm-primary), var(--pm-primary-light));
+    z-index: 1;
+}
+
+
+/* Verification Wait Screen */
+.verification-wait-container {
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: fadeInUp 0.6s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.verification-icon {
+    position: relative;
+}
+
+.verification-icon .spinner-border {
+    border-width: 3px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.security-badges {
+    animation: fadeInUp 0.8s ease 0.3s both;
+}
+
+.payment-details-card {
+    animation: slideInUp 0.6s ease 0.2s both;
+    backdrop-filter: blur(15px);
+    transition: var(--pm-transition);
+}
+
+.payment-details-card:hover {
+    transform: scale(1.01);
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.verification-progress-container {
+    max-width: 700px;
+    margin: 0 auto;
+    animation: fadeIn 0.8s ease 0.4s both;
+}
+
+.verification-progress {
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    background: rgba(25, 176, 58, 0.1);
+}
+
+.verification-progress .progress-bar {
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: width 0.5s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: visible;
+    background: linear-gradient(90deg, var(--pm-success), var(--pm-primary));
+}
+
+.verification-progress .progress-bar .progress-text {
+    color: white;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    font-size: 0.8rem;
+    white-space: nowrap;
+    font-weight: 700;
+}
+
+.verification-status-messages {
+    max-width: 550px;
+    margin: 0 auto;
+    text-align: left;
+    animation: fadeIn 1s ease 0.6s both;
+}
+
+.status-message {
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.75rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-left: 4px solid transparent;
+    opacity: 0.5;
+    transform: translateX(-20px);
+    transition: var(--pm-transition);
+    backdrop-filter: blur(10px);
+}
+
+.status-message.active {
+    opacity: 1;
+    transform: translateX(0);
+    border-left-color: var(--pm-primary);
+    background: rgba(25, 176, 58, 0.12);
+}
+
+/* Step Panels */
+.step-panel {
+    display: none;
+    animation: fadeInSlide 0.5s ease;
+}
+
+.step-panel.active {
+    display: block;
+}
+
+@keyframes fadeInSlide {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.instruction-number {
+    width: 32px;
+    height: 32px;
+    background: var(--pm-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9rem;
+    margin-right: 15px;
+    color: white;
+    flex-shrink: 0;
+    font-weight: bold;
+}
+
+/* Summary Grid */
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.summary-item {
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: var(--pm-transition);
+}
+
+.summary-item:hover {
+    background: rgba(25, 176, 58, 0.1);
+    transform: translateY(-2px);
+}
+
+.summary-item.highlight {
+    background: rgba(25, 176, 58, 0.15);
+    border-color: var(--pm-primary);
+}
+
+.summary-label {
+    font-size: 0.85rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.8;
+}
+
+.summary-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Confetti Animation */
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    pointer-events: none;
+    z-index: 9999;
+    animation: confettiFall 4s ease-in-out forwards;
+    border-radius: 2px;
+}
+
+@keyframes confettiFall {
+    0% {
+        transform: translateY(-100vh) rotate(0deg) scale(1);
+        opacity: 1;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(720deg) scale(0.3);
+        opacity: 0;
+    }
+}
+
+/* Buttons */
+.btn-primary {
+    background: linear-gradient(135deg, var(--pm-primary), var(--pm-primary-dark));
+    border: none;
+    transition: var(--pm-transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn-primary:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(25, 176, 58, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--pm-success), #157347);
+    border: none;
+    transition: var(--pm-transition);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(92, 184, 92, 0.3);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .step-content {
+        display: none;
+    }
+
+    .step-circle {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+@media (max-width: 768px) {
+    .payment-summary-card {
+        margin-bottom: 1.5rem;
+    }
+
+    .verification-progress-container {
+        padding: 0 1rem;
+    }
+
+    .verification-progress {
+        height: 22px;
+    }
+
+    .package-info-section {
+        padding: 1rem;
+    }
+
+    .payment-details-card {
+        max-width: 100%;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .crypto-selection-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-dialog {
+        margin: 0.5rem;
+    }
+
+    .step-circle {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+
+    .timer-badge {
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+    }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Focus States */
+.step-item:focus,
+.crypto-selection-card:focus,
+.btn:focus {
+    outline: 2px solid var(--pm-primary);
+    outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+    .payment-modal-content {
+        display: none;
+    }
+}
+
+/* Loading States */
+.spinner-border {
+    border-width: 3px;
+}
+
+/* Smooth Transitions */
+.step-panel,
+.crypto-selection-card,
+.package-price-display,
+.amount-display,
+.summary-item {
+    transition: var(--pm-transition);
+}
+
+/* QR Container */
+.qr-container {
+    transition: var(--pm-transition);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.qr-container:hover {
+    transform: scale(1.02);
+}
+
+/* Package Icon */
+.package-icon {
+    transition: var(--pm-transition);
+}
+
+.package-icon:hover {
+    transform: scale(1.05);
+}
+
+/* Alert Enhancements */
+.alert {
+    border-radius: 10px;
+    backdrop-filter: blur(10px);
+}
+
+.alert-info {
+    border-left: 4px solid var(--pm-info);
+}
+
+.alert-success {
+    border-left: 4px solid var(--pm-success);
+}
+
+/* Utility Classes */
+.fade-in {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.slide-up {
+    animation: slideInUp 0.5s ease;
+}
+
+.package-confirmation-card {
+    background: var(--pm-card-bg);
+    border: 1px solid var(--pm-border);
+    position: relative;
+    border-radius: 12px;
+    padding: 20px;
+}
+
+.crypto-qr canvas {
+    max-width: 140px !important;
+    height: auto !important;
+    filter: none;
+    border: 2px solid var(--pm-primary);
+    border-radius: 8px;
+    padding: 8px;
+    background: white;
+}
+
+.qr-wrapper {
+    display: inline-block;
+    background: #000000;
+    border: 2px solid var(--pm-border);
+    padding: 8px;
+    margin-bottom: 0.75rem;
+    position: relative;
+    border-radius: 8px;
+}
+
+.execution-steps {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1.5rem 0;
+    font-size: 0.95rem;
+}
+
+.execution-steps li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(25, 176, 58, 0.1);
+}
+
+.execution-steps .step-num {
+    flex-shrink: 0;
+    min-width: 1.5rem;
+    font-weight: 600;
+}
+
+.warning-line {
+    font-size: 0.9rem;
+    color: var(--pm-danger) !important;
+    border: 1px solid rgba(255, 107, 0, 0.18);
+    padding: 0.75rem 1rem;
+    background: rgba(255, 107, 0, 0.06);
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+}
+
+.txn-status-badge {
+    display: none;
+    font-size: 0.85rem;
+    padding: 0.65rem 0.9rem;
+    border: 1px solid rgba(255, 107, 0, 0.18);
+    color: var(--pm-danger) !important;
+    background: rgba(255, 107, 0, 0.06);
+    margin-top: 1rem;
+    text-align: center;
+    border-radius: 6px;
+}
+
+.btn-abort {
+    background: transparent;
+    border: none;
+    color: var(--pm-text-muted) !important;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color 0.16s;
+    padding: 6px 12px;
+}
+
+.btn-abort:hover { color: var(--pm-danger) !important; }
+
+/* --- MIGRATED FROM PaymentModal.css --- */
+/* PaymentModal.css - extracted from inline styles in PaymentModal.php */
+
+/* Professional Payment Modal Styles - Site-consistent palette from buy_points */
+
+/* Reduce modal size and shift down 15% from center */
+#paymentModal.modal .modal-dialog {
+    max-width: 900px !important;
+    margin-top: 60px !important; /* تقليل المسافة من الأعلى */
+    margin-bottom: 60px !important;
+}
+
+/* تخصيص زر الإغلاق ليتماشى مع لون التيرمينال الأخضر */
+#paymentModal .btn-close {
+    background: transparent !important;
+    color: var(--term-green) !important;
+    opacity: 0.8 !important;
+    position: relative;
+}
+
+#paymentModal .btn-close::before {
+    content: "\d7"; /* علامة '×' */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    font-family: monospace;
+}
+
+#paymentModal .btn-close:hover {
+    opacity: 1 !important;
+    text-shadow: 0 0 8px var(--term-green);
+}
+
+/* تقليل الحشو الداخلي (Padding) والهوامش (Margins) لتصغير طول النافذة */
+#paymentModal .modal-body,
+#paymentModal .p-4 {
+    padding: 0.8rem !important; /* تقليل الحشو العام */
+}
+
+#paymentModal .pt-4 {
+    padding-top: 0.8rem !important;
+}
+
+#paymentModal .mb-4 {
+    margin-bottom: 0.4rem !important; /* تقليل المسافات السفلية بين العناصر */
+}
+
+#paymentModal .crypto-selection-card,
+#paymentModal .payment-summary-card,
+#paymentModal .package-confirmation-card,
+#paymentModal .verification-form {
+    padding: 0.8rem !important; /* تقليل حشو البطاقات الداخلية */
+}
+           /* background paymentmodal color */
+
+#paymentModal .modal-footer {
+    border-top: 1px solid var(--term-green-border) !important;
+    background: rgba(10, 3, 6, 0.8);
+}
+
+#paymentModal .btn {
+    background: transparent;
+    border: 2px solid var(--term-green) !important;
+    color: var(--term-green);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-transform: none;
+    padding: 8px 20px;
+    transition: all 0.18s ease;
+    border-radius: 6px;
+}
+
+#paymentModal .btn::before { content: none; }
+#paymentModal .btn::after { content: none; }
+
+#paymentModal .btn:hover {
+    background: var(--term-green);
+    color: #000;
+}
+
+#paymentModal .btn:disabled {
+    border-color: var(--term-dim);
+    color: var(--term-dim);
+    opacity: 0.6;
+}
+
+#paymentModal h1,#paymentModal h2,#paymentModal h3,#paymentModal h4,#paymentModal h5,#paymentModal h6 {
+    color: var(--term-green) !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#paymentModal p,#paymentModal span,#paymentModal div,#paymentModal small { color: var(--term-green) !important; }
+
+#paymentModal .text-muted { color: var(--term-dim) !important; }
+
+#paymentModal .text-secondary { color: var(--term-dim) !important; }
+
+#paymentModal .text-success { color: var(--term-green) !important; }
+
+#paymentModal .text-warning { color: #ff6b00 !important; }
+
+#paymentModal .text-primary { color: var(--term-green) !important; }
+
+#paymentModal .text-danger { color: #ff6b00 !important; }
+
+#paymentModal .border-success { border-color: var(--term-green-border) !important; }
+
+#paymentModal .border-start { border-left: 1px solid var(--term-green-border) !important; }
+
+#paymentModal hr { border-color: var(--term-green-border); opacity: 0.28; }
+
+#paymentModal .badge {
+    background: var(--term-green-soft) !important;
+    border: 1px solid var(--term-green-border) !important;
+    color: var(--term-green) !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#paymentModal .blink { animation: none; }
+
+#paymentModal .verification-form {
+    border: 1px solid var(--term-green-border) !important;
+    background: rgba(10, 3, 6, 0.8) !important;
+    border-radius: 8px !important;
+}
+#paymentModal .border-primary {
+    border-color: var(--term-green) !important;
+}
+#paymentModal .input-group .btn { border-left: none; }
+
+#paymentModal .input-group .form-control { border-right: none; }
+
+/* ── Step 3: Execute Panel ─────────────────── */
+
+/* Step indicators */
+

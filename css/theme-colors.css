@@ -1,0 +1,489 @@
+/**
+ * Unified theme colors for the site
+ * Theme Colors System
+ *
+ * This file contains all core colors and styles used in the site.
+ * It can be imported into any page to apply the same color scheme.
+ */
+
+/* ==================== Core Color Variables ==================== */
+:root {
+    /* Primary Colors */
+    --primary-green: #00ff00;
+    /* Primary Green */
+    --dark-green: #006400;
+    /* Dark Green */
+    --light-green: #00cc66;
+    /* Light Green */
+
+    /* Background Colors */
+    --background-black: #050505;
+    /* Main Black Background */
+    --card-bg: #0c0c0c;
+    /* Card Background */
+    --hover-bg: #111111;
+    /* Hover Background */
+    --section-bg: rgba(0, 255, 0, 0.05);
+    /* Section Background */
+
+    /* Text Colors */
+    --text-primary: #00ff00;
+    /* Primary Text */
+    --text-secondary: #888888;
+    /* Secondary Text */
+    --text-gray: #888888;
+    /* Gray Text */
+    --text-white: #ffffff;
+    /* White Text */
+    --text-muted: rgba(255, 255, 255, 0.6);
+    /* Muted Text */
+
+    /* Borders & Glow */
+    --border-glow: rgba(0, 255, 0, 0.15);
+    --border-light: rgba(0, 255, 0, 0.1);
+    --border-medium: rgba(0, 255, 0, 0.2);
+    --border-strong: rgba(0, 255, 0, 0.3);
+
+    /* Status Colors */
+    --success-color: #00ff00;
+    /* Success */
+    --warning-color: #ffc107;
+    /* Warning */
+    --danger-color: #ff4444;
+    /* Danger */
+    --info-color: #17a2b8;
+    /* Info */
+
+    /* Button Colors */
+    --btn-primary-bg: linear-gradient(135deg, var(--primary-green), #00cc66);
+    --btn-danger-bg: linear-gradient(135deg, #ff4444, #cc0000);
+    --btn-success-bg: linear-gradient(135deg, #00ff00, #00cc00);
+    --btn-warning-bg: linear-gradient(135deg, #ffc107, #ff9800);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 4px rgba(0, 255, 0, 0.1);
+    --shadow-md: 0 2px 8px rgba(0, 255, 0, 0.15);
+    --shadow-lg: 0 4px 16px rgba(0, 255, 0, 0.2);
+    --shadow-xl: 0 8px 32px rgba(0, 255, 0, 0.25);
+
+    /* Opacity */
+    --overlay-light: rgba(0, 255, 0, 0.05);
+    --overlay-medium: rgba(0, 255, 0, 0.1);
+    --overlay-strong: rgba(0, 255, 0, 0.15);
+
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 50%;
+
+    /* Transitions */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+/* ==================== Reset Core Styles ==================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* ==================== Body Styles ==================== */
+body {
+    background-color: var(--background-black);
+    color: var(--primary-green);
+    font-family: 'Tajawal', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ==================== Main Container ==================== */
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--spacing-md);
+}
+
+/* ==================== Cards ==================== */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    transition: all var(--transition-normal);
+}
+
+.card:hover {
+    background-color: var(--hover-bg);
+    border-color: var(--border-medium);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ==================== Buttons ==================== */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--text-white);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.1), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.btn:hover {
+    background: rgba(0, 0, 0, 0.4);
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    color: var(--primary-green);
+}
+
+.btn:hover::before {
+    opacity: 1;
+}
+
+/* Colored Buttons */
+.btn-primary {
+    background: var(--btn-primary-bg);
+    color: var(--text-white);
+    border: 1px solid var(--border-strong);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #00cc66, var(--primary-green));
+    border-color: rgba(0, 255, 0, 0.5);
+    color: var(--text-white);
+    box-shadow: 0 4px 20px rgba(0, 255, 0, 0.3);
+}
+
+.btn-danger {
+    background: var(--btn-danger-bg);
+    color: white;
+    border: 1px solid #ff4444;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #cc0000, #ff4444);
+    border-color: #ff6666;
+    box-shadow: 0 4px 20px rgba(255, 68, 68, 0.3);
+}
+
+.btn-success {
+    background: var(--btn-success-bg);
+    color: var(--background-black);
+    border: 1px solid var(--primary-green);
+}
+
+.btn-warning {
+    background: var(--btn-warning-bg);
+    color: var(--background-black);
+    border: 1px solid #ffc107;
+}
+
+/* ==================== Status Badges ==================== */
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--radius-full);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-success {
+    background: var(--overlay-medium);
+    color: var(--success-color);
+    border: 1px solid var(--border-light);
+}
+
+.badge-warning {
+    background: rgba(255, 193, 7, 0.1);
+    color: var(--warning-color);
+    border: 1px solid rgba(255, 193, 7, 0.2);
+}
+
+.badge-danger {
+    background: rgba(255, 68, 68, 0.1);
+    color: var(--danger-color);
+    border: 1px solid rgba(255, 68, 68, 0.2);
+}
+
+.badge-info {
+    background: rgba(23, 162, 184, 0.1);
+    color: var(--info-color);
+    border: 1px solid rgba(23, 162, 184, 0.2);
+}
+
+/* ==================== Alerts ==================== */
+.alert {
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-md);
+    border: 1px solid;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.alert-success {
+    background: var(--overlay-light);
+    border-color: var(--border-light);
+    color: var(--success-color);
+}
+
+.alert-warning {
+    background: rgba(255, 193, 7, 0.05);
+    border-color: rgba(255, 193, 7, 0.2);
+    color: var(--warning-color);
+}
+
+.alert-danger {
+    background: rgba(255, 68, 68, 0.05);
+    border-color: rgba(255, 68, 68, 0.2);
+    color: var(--danger-color);
+}
+
+.alert-info {
+    background: rgba(23, 162, 184, 0.05);
+    border-color: rgba(23, 162, 184, 0.2);
+    color: var(--info-color);
+}
+
+/* ==================== Tables ==================== */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.table thead {
+    background: var(--section-bg);
+}
+
+.table th {
+    padding: var(--spacing-md);
+    text-align: left;
+    font-weight: 600;
+    color: var(--primary-green);
+    border-bottom: 2px solid var(--border-light);
+}
+
+.table td {
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-light);
+    color: var(--text-white);
+}
+
+.table tbody tr:hover {
+    background: var(--hover-bg);
+}
+
+/* ==================== Forms ==================== */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.form-label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    color: var(--primary-green);
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: var(--card-bg);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    color: var(--text-white);
+    font-size: 0.9rem;
+    transition: all var(--transition-normal);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--border-strong);
+    box-shadow: 0 0 0 3px var(--overlay-light);
+}
+
+/* ==================== Utility Classes ==================== */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: left;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.mt-1 {
+    margin-top: var(--spacing-xs);
+}
+
+.mt-2 {
+    margin-top: var(--spacing-sm);
+}
+
+.mt-3 {
+    margin-top: var(--spacing-md);
+}
+
+.mt-4 {
+    margin-top: var(--spacing-lg);
+}
+
+.mt-5 {
+    margin-top: var(--spacing-xl);
+}
+
+.mb-1 {
+    margin-bottom: var(--spacing-xs);
+}
+
+.mb-2 {
+    margin-bottom: var(--spacing-sm);
+}
+
+.mb-3 {
+    margin-bottom: var(--spacing-md);
+}
+
+.mb-4 {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mb-5 {
+    margin-bottom: var(--spacing-xl);
+}
+
+.p-1 {
+    padding: var(--spacing-xs);
+}
+
+.p-2 {
+    padding: var(--spacing-sm);
+}
+
+.p-3 {
+    padding: var(--spacing-md);
+}
+
+.p-4 {
+    padding: var(--spacing-lg);
+}
+
+.p-5 {
+    padding: var(--spacing-xl);
+}
+
+/* ==================== Color Gradients ==================== */
+.gradient-text {
+    background: linear-gradient(90deg, #fff, var(--primary-green));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.gradient-bg-green {
+    background: linear-gradient(135deg, var(--primary-green), #00cc66);
+}
+
+.gradient-bg-dark {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), transparent);
+}
+
+/* ==================== Special Effects ==================== */
+.glow-effect {
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
+/* ==================== Responsive Design ==================== */
+@media (max-width: 768px) {
+    .container {
+        padding: var(--spacing-sm);
+    }
+
+    .btn {
+        padding: var(--spacing-xs) var(--spacing-md);
+        font-size: 0.85rem;
+    }
+
+    .table {
+        font-size: 0.85rem;
+    }
+
+    .table th,
+    .table td {
+        padding: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 0.9rem;
+    }
+
+    .card {
+        padding: var(--spacing-md);
+    }
+}

@@ -1,0 +1,587 @@
+/**
+ * Master Layout Enhanced Navigation Styles
+ * - Complements global-nav.css
+ * - Terminal/Cyberpunk aesthetic
+ * - Improved responsiveness and accessibility
+ */
+
+:root {
+    /* Component Specific Tokens - Mapping to theme.css */
+    --nav-terminal-green: var(--color-primary);
+    --nav-terminal-dark: var(--color-bg);
+    --nav-terminal-border: var(--color-border);
+    --nav-terminal-glow: var(--shadow-glow);
+
+    /* Profile Card Tokens */
+    --profile-bg: rgba(0, 0, 0, 0.45);
+    --profile-border: var(--color-border);
+    --profile-border-hover: var(--color-primary);
+    --profile-radius: var(--radius-xs);
+}
+
+/* ===================================
+   Global Overrides & Resets
+   =================================== */
+
+/* Prevent page jump when modal opens */
+body.modal-open {
+    padding-right: 0 !important;
+    overflow: auto !important;
+}
+
+/* Enhanced Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(46, 204, 113, 0.3);
+    border-radius: 3px;
+    transition: background var(--bc-transition-fast);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(46, 204, 113, 0.5);
+}
+
+/* ===================================
+   Layout Alignment
+   =================================== */
+.bc-nav__inner,
+.bc-nav__brand,
+.bc-nav__actions,
+.bc-user {
+    display: flex;
+    align-items: center;
+}
+
+.bc-btn,
+.bc-nav__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===================================
+   Navigation Components
+   =================================== */
+
+/* Website Link Bar (Enhanced) */
+.bc-website-bar {
+    position: absolute;
+    top: var(--bc-height-desktop);
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 30px;
+    background: rgba(13, 27, 13, 0.8);
+    backdrop-filter: blur(8px);
+    z-index: 950;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--bc-border);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.bc-website-bar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bc-accent);
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+    font-weight: 600;
+    padding: 0 20px;
+    text-shadow: 0 0 5px rgba(46, 204, 113, 0.3);
+}
+
+.bc-website-bar-url {
+    color: var(--bc-text);
+    font-weight: 700;
+    opacity: 0.9;
+}
+
+@media (max-width: 991.98px) {
+    .bc-website-bar {
+        height: 25px;
+        top: var(--bc-height-mobile);
+    }
+    .bc-website-bar-link {
+        font-size: 0.65rem;
+    }
+}
+
+/* ===================================
+   Notification System (V2.0 Cyber) - Enhanced
+   =================================== */
+.bc-notif-btn {
+    min-width: 34px;
+    min-height: 34px;
+    padding: 6px;
+    margin: 0 4px;
+    border-radius: var(--bc-radius-md);
+    transition: all var(--bc-transition-base);
+    position: relative;
+    background: rgba(46, 204, 113, 0.05);
+    border: 1px solid var(--bc-border-accent);
+    color: var(--bc-accent);
+    box-shadow: 0 0 8px rgba(46, 204, 113, 0.1);
+}
+
+.bc-notif-btn:hover {
+    background: rgba(46, 204, 113, 0.15);
+    color: var(--bc-accent);
+    border-color: var(--bc-accent);
+    box-shadow: 0 0 16px rgba(46, 204, 113, 0.3);
+    transform: translateY(-1px);
+}
+
+.bc-notif-btn i {
+    font-size: 1.1rem;
+}
+
+/* Wallet Button - Styles migrated to global-nav.css for consistency */
+
+.bc-notif-badge.pulse {
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+}
+
+#notificationModal .modal-dialog {
+    margin: 0;
+    position: absolute;
+    filter: drop-shadow(var(--nav-terminal-glow));
+    z-index: 2001;
+}
+
+#notificationModal .modal-content {
+    background: rgba(5, 10, 5, 0.98);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--nav-terminal-border);
+    border-radius: 0;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+}
+
+#notificationModal .modal-header {
+    background: rgba(46, 204, 113, 0.05);
+    border-bottom: 1px solid rgba(46, 204, 113, 0.1);
+    padding: 15px 20px;
+}
+
+#notificationModal .modal-title {
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    color: var(--bc-accent);
+}
+
+/* Notification Item Styling */
+.notif-item {
+    background: rgba(46, 204, 113, 0.03);
+    border: 1px solid rgba(46, 204, 113, 0.1);
+    margin: 10px 15px;
+    padding: 12px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.notif-item:hover {
+    background: rgba(46, 204, 113, 0.07);
+    border-color: rgba(46, 204, 113, 0.3);
+    transform: translateX(2px);
+}
+
+.notif-item::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2px;
+    height: 100%;
+    background: var(--status-color, var(--bc-accent));
+}
+
+.notif-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.notif-tasg {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    font-weight: 700;
+    padding: 2px 8px;
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--bc-accent);
+    border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
+.notif-time {
+    font-size: 0.6rem;
+    color: var(--bc-text-muted);
+    font-family: 'Courier New', monospace;
+}
+
+.notif-content {
+    font-family: 'Courier New', monospace;
+    font-size: 0.75rem;
+    color: var(--bc-text);
+    line-height: 1.4;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.notif-footer {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+    font-size: 0.65rem;
+}
+
+.notif-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--bc-text-muted);
+}
+
+.notif-stat i {
+    font-size: 0.7rem;
+}
+
+.notif-stat.pts { color: #fbbf24; }
+.notif-stat.id { color: var(--bc-accent); opacity: 0.8; }
+
+/* Status Variants */
+.notif-item.status-ok { --status-color: #00f3ff; }
+.notif-item.status-fail { --status-color: #ff003c; }
+.notif-item.status-wait { --status-color: #ffb100; }
+
+/* Empty State */
+.notif-empty {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.notif-empty i {
+    font-size: 2.5rem;
+    opacity: 0.2;
+    margin-bottom: 15px;
+    color: var(--bc-accent);
+}
+
+.notif-empty-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    color: var(--bc-text-muted);
+}
+
+/* ===================================
+   User Profile Component (V6.0 Ultra Elite)
+   =================================== */
+.user-profile-wrapper {
+    position: relative;
+    z-index: 1050;
+}
+
+.bc-user__trigger.user-profile-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(6px, 1vw, 15px);
+    min-width: auto !important;
+    width: auto;
+    padding: 4px clamp(10px, 1.2vw, 16px) !important;
+    background: transparent;
+    border: none;
+    color: var(--bc-text);
+    position: relative;
+    overflow: visible;
+    transition: none;
+    z-index: 1;
+}
+
+/* Clipped Background */
+.bc-user__trigger.user-profile-btn::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(13, 27, 13, 0.95), rgba(5, 10, 5, 0.98));
+    border: 1px solid rgba(46, 204, 113, 0.2);
+    clip-path: polygon(
+        10px 0, 100% 0,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        0 100%, 0 10px
+    );
+    z-index: -1;
+    transition: none;
+}
+
+/* Four-Corner Brackets (Enhanced) */
+.profile-bracket {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--bc-accent);
+    opacity: 0.4;
+    transition: none;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.bracket-tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+.bracket-tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; }
+.bracket-bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; }
+.bracket-br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+.bc-user__trigger.user-profile-btn:hover .profile-bracket {
+    opacity: 1;
+    width: 20px;
+    height: 20px;
+    filter: drop-shadow(0 0 5px var(--bc-accent));
+}
+
+/* Avatar Container (Prevents clipping of status) */
+.user-avatar-container {
+    position: relative;
+    width: clamp(28px, 2.5vw, 34px);
+    height: clamp(28px, 2.5vw, 34px);
+    flex-shrink: 0;
+}
+
+
+
+.bc-user__trigger.user-profile-btn:hover .user-avatar-premium {
+    background: var(--bc-accent);
+}
+
+.user-avatar-premium img, .user-initial {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    clip-path: inherit;
+}
+
+/* Status Indicator (Outside clipped area) */
+.profile-status-dot {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 12px;
+    height: 12px;
+    background: #2ecc71;
+    border: 2px solid var(--nav-terminal-dark);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 0 10px #2ecc71;
+}
+
+/* Info Section */
+.user-info-premium {
+    flex: 1;
+    text-align: left;
+    overflow: visible;
+    padding-left: clamp(6px, 0.8vw, 12px);
+    border-left: 2px solid rgba(46, 204, 113, 0.15);
+}
+
+.user-name-premium {
+    font-size: clamp(0.7rem, 0.78vw, 0.82rem) !important;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+    color: #fff;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    white-space: nowrap;
+    overflow: visible !important;
+    text-overflow: clip !important;
+}
+
+.user-stats-premium {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.7rem;
+    font-family: 'Courier New', monospace;
+}
+
+.user-badge-points {
+    color: #fbbf24;
+    font-weight: 700;
+    text-shadow: 0 0 5px rgba(251, 191, 36, 0.3);
+}
+
+
+
+/* Dropdown Menu (Ultra Elite) */
+.user-profile-wrapper .bc-user__menu {
+    min-width: 100%;
+    margin-top: 18px;
+    background: rgba(5, 10, 5, 0.99);
+    backdrop-filter: blur(25px);
+    border: 1px solid var(--nav-terminal-border);
+    border-radius: 0;
+    clip-path: polygon(
+        0 20px, 20px 0,
+        100% 0,
+        100% calc(100% - 20px),
+        calc(100% - 20px) 100%,
+        0 100%
+    );
+    padding: 15px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8), 0 0 20px rgba(46, 204, 113, 0.05);
+}
+
+.user-profile-wrapper .bc-user__item {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    color: var(--bc-text-muted);
+    font-size: 0.8rem;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: none;
+    border-left: 4px solid transparent;
+    margin-bottom: 2px;
+}
+
+.user-profile-wrapper .bc-user__item:hover {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--bc-accent);
+    border-left-color: var(--bc-accent);
+    padding-left: 28px;
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.3);
+}
+
+.user-profile-wrapper .bc-user__item i {
+    width: 22px;
+    margin-right: 18px;
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.user-profile-wrapper .bc-user__item--danger:hover {
+    background: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border-left-color: #e74c3c;
+}
+
+/* Locked Links Styling */
+.bc-locked-link {
+    cursor: not-allowed !important;
+    position: relative;
+    opacity: 0.7;
+}
+
+.bc-lock-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: #ff3333;
+    color: white;
+    font-size: 0.5rem;
+    width: 12px;
+    height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px; /* Squared for tech look */
+    border: 1px solid var(--nav-terminal-dark);
+    box-shadow: 0 0 5px rgba(255, 51, 51, 0.5);
+    z-index: 2;
+    animation: lock-blink 3s infinite;
+}
+
+@keyframes lock-blink {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.8; transform: scale(0.9); }
+}
+
+.bc-locked-link i {
+    filter: grayscale(1);
+}
+
+.bc-locked-link:hover {
+    background: rgba(255, 51, 51, 0.05) !important;
+    color: #ff3333 !important;
+    border-left-color: #ff3333 !important;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 991.98px) {
+    .bc-user__trigger.user-profile-btn {
+        min-width: auto;
+        padding: 12px;
+        gap: 0;
+        clip-path: none;
+        border-radius: var(--bc-radius-full);
+    }
+    .user-info-premium,
+    .dropdown-arrow-premium,
+    .profile-bracket,
+    .user-avatar-container::after {
+        display: none;
+    }
+    .user-avatar-container {
+        width: 40px;
+        height: 40px;
+    }
+    .user-avatar-premium {
+        clip-path: none;
+        border-radius: var(--bc-radius-full);
+    }
+    .user-avatar-premium img, .user-initial {
+        clip-path: none;
+        border-radius: var(--bc-radius-full);
+    }
+}
+
+/* ===================================
+   Terminal Animations
+   =================================== */
+@keyframes scanline {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+}
+
+.bc-nav::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(46, 204, 113, 0.02) 0px,
+        rgba(46, 204, 113, 0.02) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    pointer-events: none;
+    z-index: 10;
+}

@@ -1,0 +1,873 @@
+/**
+ * Enhanced Navbar Styles
+ * Modern glassmorphism navbar with green/black theme
+ */
+
+/* ===== Body Padding for Fixed Navbar ===== */
+body {
+    padding-top: 80px !important;
+    background-color: #050505;
+    overflow-x: hidden;
+    /* Account for fixed navbar height (48px) + system bar (32px) */
+}
+
+/* Body padding when navbar is hidden (only Linkbar visible) */
+body.navbar-hidden {
+    padding-top: 32px !important;
+}
+
+/* ===== Compact Header Bar (Main Navbar Container) ===== */
+.compact-header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    /* Higher z-index for fixed navbar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.25rem 1rem;
+    background: rgba(15, 20, 25, 0.98);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid rgba(0, 255, 0, 0.1);
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.25);
+    height: 64px;
+    width: 100%;
+    font-size: 0.85em;
+    transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Left Side: Menu + User Info ===== */
+.header-left-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Sidebar Toggler (Hamburger) */
+.sidebar-toggler {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 100%);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    border-radius: 10px;
+    color: #00ff00 !important;
+    transition: all 0.15s ease;
+    cursor: pointer;
+}
+
+.sidebar-toggler:hover {
+    background: linear-gradient(135deg, rgba(0, 255, 0, 0.2) 0%, rgba(0, 0, 0, 0.6) 100%);
+    border-color: rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+    transform: scale(1.05);
+}
+
+/* Hide dropdown caret arrow */
+.sidebar-toggler.dropdown-toggle::after,
+.user-dropdown-toggle.dropdown-toggle::after {
+    display: none;
+}
+
+/* User Info Section (The "Bar" style) */
+.user-info-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: fit-content;
+    flex-shrink: 0;
+    position: relative;
+    padding: 0.35rem 1rem;
+    border-radius: 8px;
+    transition: all 0.15s ease;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.05), inset 0 0 20px rgba(0, 0, 0, 0.5);
+    height: 48px;
+}
+
+.user-info-section:hover {
+    background: rgba(0, 0, 0, 0.6);
+    border-color: rgba(0, 255, 0, 0.6);
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.15), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.user-profile-display {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: default;
+}
+
+.user-avatar-display {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #00ff00, #00cc66);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    border: 2px solid rgba(0, 255, 0, 0.5);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.4);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.user-avatar-display:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px rgba(0, 255, 0, 0.6);
+    border-color: #00ff00;
+}
+
+.user-avatar-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.user-details-display {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.user-stat {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.6rem;
+    background: rgba(0, 20, 0, 0.3);
+    border-radius: 4px;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+    border: 1px solid rgba(0, 255, 0, 0.15);
+    transition: all 0.2s ease;
+    font-family: 'Consolas', 'Monaco', monospace;
+    /* Tech/Code look */
+    letter-spacing: 0.5px;
+}
+
+.user-stat:hover {
+    background: rgba(0, 255, 0, 0.1);
+    border-color: rgba(0, 255, 0, 0.4);
+    box-shadow: 0 0 8px rgba(0, 255, 0, 0.2);
+    transform: translateY(-1px);
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+}
+
+.user-stat i {
+    font-size: 0.75rem;
+    opacity: 0.8;
+}
+
+.user-stat.username {
+    font-weight: 800;
+    color: #fff;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    font-size: 1.1rem;
+    /* Increased size */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3);
+    /* Stronger glow */
+    margin-right: 0.5rem;
+}
+
+/* ===== Right Side: Actions ===== */
+.header-right-section {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    /* Increased gap spacing */
+}
+
+/* Site Info Container */
+.site-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+/* Site Name Styling */
+.site-name {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    line-height: 1;
+    color: #00ff00;
+    text-shadow: 0 0 20px rgba(0, 255, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8);
+    text-transform: uppercase;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Modern font match */
+    background: linear-gradient(180deg, #ffffff, #00ff00);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.8));
+}
+/* Fallback for browsers that don't support background-clip: text */
+@supports not (-webkit-background-clip: text) {
+    .site-name {
+        color: #00cc00;
+        text-shadow: 0 0 20px rgba(0, 255, 0, 0.9), 0 0 10px rgba(0, 0, 0, 0.8);
+    }
+}
+/* Site Link Styling */
+/* Site Link Styling */
+.site-link {
+    position: absolute;
+    bottom: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    font-size: 0.6rem;
+    /* Tiny size */
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    white-space: nowrap;
+    opacity: 0.7;
+}
+
+.site-link:hover {
+    background: transparent;
+    border-color: transparent;
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+    transform: translateX(-50%) scale(1.1);
+    box-shadow: none;
+    opacity: 1;
+}
+
+/* Notification Button */
+.btn-notification {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    border-radius: 10px;
+    color: #fff;
+    transition: all 0.15s ease;
+    cursor: pointer;
+    position: relative;
+    padding: 0;
+}
+
+/* User Avatar Toggle Button */
+.user-avatar-toggle {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.user-avatar-toggle:active {
+    transform: scale(0.95);
+}
+
+.btn-notification:hover {
+    background: rgba(0, 50, 0, 0.4);
+    border-color: #00ff00;
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+    transform: scale(1.05);
+}
+
+/* Notification Badge Pulse */
+.btn-notification .badge-dot {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #00ff00;
+    border-radius: 50%;
+    /* animation: pulse-green 2s infinite; REMOVED */
+    box-shadow: 0 0 5px var(--term-green);
+}
+
+@keyframes pulse-green {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 6px rgba(0, 255, 0, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+    }
+}
+
+/* User Dropdown Toggle */
+.user-dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 255, 0, 0.15);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #fff;
+    text-decoration: none;
+    height: 38px;
+}
+
+.user-dropdown-toggle:hover,
+.user-dropdown-toggle[aria-expanded="true"] {
+    background: rgba(0, 50, 0, 0.4);
+    border-color: #00ff00;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.user-dropdown-toggle i {
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+}
+
+/* Dropdown Menu Customization (Bootstrap Override) */
+.dropdown-menu-enhanced {
+    background: rgba(10, 15, 20, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 0.5rem;
+    margin-top: 10px !important;
+    max-height: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 255, 0, 0.3) transparent;
+}
+
+/* Custom scrollbar for webkit browsers */
+.dropdown-menu-enhanced::-webkit-scrollbar {
+    width: 6px;
+}
+
+.dropdown-menu-enhanced::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dropdown-menu-enhanced::-webkit-scrollbar-thumb {
+    background: rgba(0, 255, 0, 0.3);
+    border-radius: 3px;
+}
+
+.dropdown-menu-enhanced::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 255, 0, 0.5);
+}
+
+/* Dropleft dropdown positioning */
+.dropleft .dropdown-menu {
+    position: absolute;
+    top: 0;
+    right: 100%;
+    margin-right: 0.5rem;
+    left: auto;
+}
+
+/* Ensure nested dropdowns don't overflow */
+.dropdown-menu .dropdown-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 0.1rem;
+    z-index: 1060;
+    min-width: 200px;
+    background: rgba(10, 15, 20, 0.98);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    padding: 0.5rem;
+    margin-top: 0;
+}
+
+/* Dropend positioning for nested dropdowns */
+.dropend .dropdown-menu {
+    position: absolute;
+    top: 0;
+    left: 100%;
+    margin-left: 0.1rem;
+    z-index: 1060;
+}
+
+/* Show nested dropdowns on hover (only for nested dropdowns, not main dropdown) */
+.dropend:hover .dropdown-menu {
+    display: block;
+}
+
+/* Prevent nested dropdowns from closing when clicking inside */
+
+/* Nested dropdown item styling */
+.dropdown-menu .dropdown-menu .dropdown-item {
+    color: #e0e0e0;
+    border-radius: 6px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+}
+
+.dropdown-menu .dropdown-menu .dropdown-item:hover {
+    background: rgba(0, 50, 0, 0.4);
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+    transform: translateX(2px);
+}
+
+/* Nested dropdown toggle styling */
+.dropdown-item.dropdown-toggle {
+    position: relative;
+}
+
+.dropdown-item.dropdown-toggle::after {
+    content: "\f054";
+    font-family: "Font Awesome 6 Free", sans-serif;
+    font-weight: 900;
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.7rem;
+    color: rgba(0, 255, 0, 0.6);
+}
+
+.dropdown-item {
+    color: #e0e0e0;
+    border-radius: 6px;
+    padding: 0.5rem 1rem;
+    transition: all 0.2s;
+}
+
+.dropdown-item:hover {
+    background: rgba(0, 50, 0, 0.4);
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+}
+
+.dropdown-item i {
+    width: 20px;
+    text-align: center;
+    margin-right: 0.5rem;
+    color: #00ff00;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 0.9), 0 0 8px rgba(0, 255, 0, 0.8);
+    /* Force green icons */
+}
+
+.dropdown-divider {
+    border-top: 1px solid rgba(0, 255, 0, 0.1);
+}
+
+.dropdown-header {
+    color: rgba(0, 255, 0, 0.6);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+
+    .user-stat.expiry,
+    .user-stat.id-badge {
+        display: none;
+    }
+}
+
+@media (max-width: 576px) {
+    .user-info-section {
+        display: none;
+        /* Hide confusing complex stats on very small screens, keep hamburger and right menu */
+    }
+
+    .compact-header-bar {
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+.content {
+    padding: 0 15px 30px 15px;
+    margin-top: 10px;
+}
+
+.main-container {
+    background: rgba(15, 20, 25, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 255, 0, 0.1);
+    border-radius: 24px;
+    padding: 2rem;
+    min-height: calc(100vh - 100px);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.02);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Ensure the top of the container feels connected but distinct from the navbar */
+.main-container::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.3), transparent);
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        border-radius: 16px;
+        padding: 1.25rem;
+    }
+
+    .content {
+        padding: 0 10px 20px 10px;
+    }
+}
+
+/* Scoped navigation styles: top-level attribute selector prevents global bleed.
+   All classes are prefixed with bc- (BEM-like). Use conservative selectors and avoid global resets.
+*/
+
+/* Design system variables (use var() where supported, provide fallbacks for IE11) */
+[data-bc-nav] {
+    /* Fallbacks first, then variables for modern browsers */
+    background: #0D1B0D;
+    /* --bc-primary is used for modern browsers */
+    --bc-primary: #0D1B0D;
+    --bc-secondary: #1A2F1A;
+    --bc-accent: #2ECC71;
+    --bc-text: #E8F5E8;
+    --bc-radius-btn: 4px;
+    --bc-radius-dropdown: 8px;
+    --bc-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    color: var(--bc-text, #E8F5E8);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    height: 50px;
+}
+
+/* Basic layout and max heights */
+[data-bc-nav].bc-nav,
+[data-bc-nav] .bc-nav__inner {
+    box-sizing: border-box;
+    width: 100%;
+}
+
+[data-bc-nav] .bc-nav__inner {
+   
+}
+
+/* Branding */
+[data-bc-nav] .bc-nav__brand {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+    margin-right: 12px;
+}
+
+[data-bc-nav] .bc-nav__logo {
+    height: 32px;
+    width: 32px;
+    border-radius: 4px;
+    margin-right: 8px;
+    object-fit: contain;
+}
+
+[data-bc-nav] .bc-nav__title {
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+/* Hamburger button */
+[data-bc-nav] .bc-nav__hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    background: transparent;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: var(--bc-radius-btn, 4px);
+    transition: background 0.2s ease-in-out;
+}
+
+[data-bc-nav] .bc-nav__hamburger:focus {
+    outline: 2px solid var(--bc-accent);
+    outline-offset: 2px;
+}
+
+/* Hamburger visuals */
+[data-bc-nav] .bc-nav__hamburger-box {
+    display: block;
+    width: 24px;
+    height: 16px;
+    position: relative;
+}
+
+[data-bc-nav] .bc-nav__hamburger-inner {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: var(--bc-text, #E8F5E8);
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* Links (collapsed on mobile by default) */
+[data-bc-nav] .bc-nav__links {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    background: var(--bc-primary, #0D1B0D);
+    margin: 0;
+    padding: 8px;
+    list-style: none;
+    display: none;
+    /* hidden mobile panel by default */
+    flex-direction: column;
+    box-shadow: var(--bc-shadow);
+    border-radius: var(--bc-radius-dropdown);
+    max-height: calc(100vh - 60px);
+    overflow: auto;
+    transition: transform 0.25s cubic-bezier(.2, .9, .2, 1), opacity 0.2s ease;
+    transform: translateY(-8px);
+    opacity: 0;
+    z-index: 60;
+}
+
+/* Visible state (added by JS) */
+[data-bc-nav].bc-nav--open .bc-nav__links {
+    display: flex;
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* Desktop layout: inline links, visible */
+@media (min-width: 768px) {
+    [data-bc-nav] {
+        height: 60px;
+    }
+
+    [data-bc-nav] .bc-nav__hamburger {
+        display: none;
+    }
+
+    [data-bc-nav] .bc-nav__links {
+        position: static;
+        display: flex !important;
+        flex-direction: row;
+        background: transparent;
+        transform: none;
+        opacity: 1;
+        box-shadow: none;
+        padding: 0;
+    }
+
+    [data-bc-nav] .bc-nav__links .bc-nav__link {
+        margin-right: 16px;
+    }
+}
+
+/* Nav links styling */
+[data-bc-nav] .bc-nav__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 12px;
+    border-radius: var(--bc-radius-btn);
+    color: var(--bc-text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    min-height: 44px;
+    /* ensures touch target */
+}
+
+[data-bc-nav] .bc-nav__link:hover,
+[data-bc-nav] .bc-nav__link:focus {
+    background: rgba(46, 204, 113, 0.06);
+    transition: background 0.2s ease-in-out;
+    outline: none;
+}
+
+/* Actions area */
+[data-bc-nav] .bc-nav__actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Buttons: notifications & admin */
+[data-bc-nav] button.bc-nav__notifications,
+[data-bc-nav] button.bc-nav__admin,
+[data-bc-nav] .bc-nav__avatar {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: var(--bc-radius-btn);
+    min-width: 44px;
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+[data-bc-nav] button.bc-nav__notifications:focus,
+[data-bc-nav] button.bc-nav__admin:focus,
+[data-bc-nav] .bc-nav__avatar:focus {
+    outline: 2px solid var(--bc-accent);
+    outline-offset: 2px;
+}
+
+/* Notification badge */
+[data-bc-nav] .bc-nav__notif-count {
+    display: inline-block;
+    background: var(--bc-accent);
+    color: #002200;
+    border-radius: 999px;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    margin-left: 6px;
+    font-weight: 700;
+}
+
+/* Admin button: distinct with tooltip support */
+[data-bc-nav] button.bc-nav__admin {
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+[data-bc-nav] button.bc-nav__admin:hover {
+    box-shadow: var(--bc-shadow);
+    transform: translateY(-1px);
+}
+
+/* Profile dropdown */
+[data-bc-nav] .bc-nav__profile {
+    position: relative;
+}
+
+[data-bc-nav] .bc-nav__dropdown {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: var(--bc-secondary, #1A2F1A);
+    color: var(--bc-text);
+    min-width: 160px;
+    border-radius: var(--bc-radius-dropdown);
+    box-shadow: var(--bc-shadow);
+    padding: 8px;
+    display: none;
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+    z-index: 70;
+}
+
+[data-bc-nav] .bc-nav__profile.bc-profile--open .bc-nav__dropdown {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+[data-bc-nav] .bc-nav__dropdown-item {
+    display: block;
+    padding: 8px;
+    color: inherit;
+    text-decoration: none;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+[data-bc-nav] .bc-nav__dropdown-item:hover,
+[data-bc-nav] .bc-nav__dropdown-item:focus {
+    background: rgba(46, 204, 113, 0.04);
+    outline: none;
+}
+
+/* Focus visible outline for keyboard users */
+[data-bc-nav] .bc-nav__link:focus,
+[data-bc-nav] .bc-nav__dropdown-item:focus {
+    outline: 2px dashed var(--bc-accent);
+    outline-offset: 2px;
+}
+
+/* RTL support */
+[dir="rtl"] [data-bc-nav] .bc-nav__brand {
+    flex-direction: row-reverse;
+}
+
+[dir="rtl"] [data-bc-nav] .bc-nav__dropdown {
+    right: auto;
+    left: 0;
+}
+
+/* Print-friendly: hide the navigation when printing */
+@media print {
+    [data-bc-nav] {
+        display: none !important;
+    }
+}
+
+/* Accessibility helpers */
+.bc-skip-link {
+    position: absolute;
+    left: -9999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.bc-skip-link:focus {
+    position: static;
+    left: auto;
+    top: auto;
+    width: auto;
+    height: auto;
+    background: var(--bc-accent);
+    color: #001000;
+    padding: 8px;
+    z-index: 9999;
+    border-radius: 4px;
+}
+
+/* IE11 friendly fallbacks for transitions and transforms provided above where possible */
+/* File size note: compact and vendor-prefixed minimal properties to keep < 50 KB for nav assets */

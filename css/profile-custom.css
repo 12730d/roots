@@ -1,0 +1,315 @@
+/* Layout - Full Page & Responsive */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    min-height: 100vh !important;
+    background: #000000 !important;
+    color: #00ff00 !important;
+    font-family: 'Share Tech Mono', 'Courier New', monospace !important;
+    overflow-x: hidden !important;
+}
+
+/* Base Wrapper to handle background across full height */
+.scanner-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background:
+        linear-gradient(rgba(0, 15, 0, 0.95), rgba(0, 5, 0, 0.98)),
+        linear-gradient(to right, rgba(0, 255, 0, 0.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0, 255, 0, 0.05) 1px, transparent 1px);
+    background-size: 100% 100%, 30px 30px, 30px 30px;
+    background-attachment: fixed;
+}
+
+/* CRT Scanline Overlay - Reduced Intensity */
+.scanner-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 9999;
+    background: linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0) 50%,
+        rgba(0, 0, 0, 0.05) 50%,
+        rgba(0, 0, 0, 0.05)
+    );
+    background-size: 100% 6px;
+    opacity: 0.4;
+}
+
+.scanner-overlay::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 255, 0, 0.01);
+    box-shadow: inset 0 0 150px rgba(0, 200, 0, 0.1);
+    pointer-events: none;
+}
+
+/* Scanner HUD Container */
+.bg-secondary {
+    background: rgba(5, 10, 5, 0.85) !important;
+    border: 1px solid #00ff00 !important;
+    box-shadow: 0 0 15px rgba(0, 255, 0, 0.2), inset 0 0 20px rgba(0, 50, 0, 0.5) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Decorative corner markers for HUD */
+.bg-secondary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 20px;
+    height: 20px;
+    border-top: 2px solid #00ff00;
+    border-left: 2px solid #00ff00;
+}
+.bg-secondary::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    border-bottom: 2px solid #00ff00;
+    border-right: 2px solid #00ff00;
+}
+
+/* Typography & Colors */
+h3, h6, .text-primary, label {
+    color: #00ff00 !important;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 8px rgba(0, 255, 0, 0.6);
+}
+
+.text-light {
+    color: #ccffcc !important;
+}
+
+/* Inputs as Terminal Fields */
+.form-control {
+    background: rgba(0, 20, 0, 0.6) !important;
+    border: 1px solid #004400 !important;
+    border-left: 4px solid #00ff00 !important;
+    color: #00ff00 !important;
+    border-radius: 0 !important;
+    font-family: 'Share Tech Mono', monospace !important;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    background: rgba(0, 30, 0, 0.8) !important;
+    border-color: #00ff00 !important;
+    box-shadow: 0 0 10px rgba(0, 255, 0, 0.4) !important;
+}
+
+.form-control:disabled {
+    opacity: 0.6;
+    border-left-color: #555 !important;
+}
+
+/* Buttons */
+.btn-primary {
+    background: transparent !important;
+    border: 1px solid #00ff00 !important;
+    color: #00ff00 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-radius: 0 !important;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.2s;
+}
+
+.btn-primary:hover {
+    background: #00ff00 !important;
+    color: #000 !important;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+.btn-outline-danger {
+    color: #ff3333 !important;
+    border: 1px solid #ff3333 !important;
+    border-radius: 0 !important;
+}
+.btn-outline-danger:hover {
+    background: #ff3333 !important;
+    color: #000 !important;
+    box-shadow: 0 0 15px rgba(255, 50, 50, 0.5);
+}
+
+/* Scanner Avatar Target */
+.scanner-target {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Rotating rings - Slower */
+.scanner-ring {
+    position: absolute;
+    border: 1px dashed rgba(0, 255, 0, 0.3);
+    border-radius: 50%;
+    animation: rotate-ring 20s linear infinite;
+}
+
+.scanner-ring:nth-child(1) { width: 100%; height: 100%; border-width: 1px; border-style: solid; border-left-color: transparent; border-right-color: transparent; animation-duration: 8s; }
+.scanner-ring:nth-child(2) { width: 110%; height: 110%; opacity: 0.3; animation-direction: reverse; animation-duration: 15s; }
+.scanner-ring:nth-child(3) { width: 130%; height: 130%; opacity: 0.2; border-style: dotted; animation-duration: 30s; }
+
+@keyframes rotate-ring {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Avatar Image inside scanner */
+.scanner-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 0;
+    object-fit: cover;
+    z-index: 2;
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+    filter: sepia(100%) hue-rotate(50deg) saturate(300%) contrast(1.2); /* Matrix Green Filter */
+}
+
+/* Scanning bar animation over avatar - Slower */
+.scan-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+    z-index: 5;
+    animation: scan-vertical 4s ease-in-out infinite;
+    opacity: 0.6;
+}
+
+@keyframes scan-vertical {
+    0% { top: 0%; opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { top: 100%; opacity: 0; }
+}
+
+/* Alerts */
+.alert {
+    background: rgba(0, 20, 0, 0.9) !important;
+    border: 1px solid currentColor !important;
+    border-radius: 0 !important;
+    font-family: 'Share Tech Mono', monospace;
+}
+.alert-success { color: #00ff00 !important; border-color: #00ff00 !important; }
+.alert-danger { color: #ff3333 !important; border-color: #ff3333 !important; }
+
+/* Terminal Border with corners - Enhanced for Full Page */
+.terminal-border {
+    border: 1px solid #00ff00;
+    position: relative;
+    padding: 2rem;
+    background: rgba(0, 10, 0, 0.95);
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-border::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 20px;
+    height: 20px;
+    border-top: 4px solid #00ff00;
+    border-left: 4px solid #00ff00;
+    z-index: 10;
+}
+
+.terminal-border::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 20px;
+    height: 20px;
+    border-bottom: 4px solid #00ff00;
+    border-right: 4px solid #00ff00;
+    z-index: 10;
+}
+
+@media (max-width: 576px) {
+    .terminal-border {
+        padding: 1rem;
+        border: none !important;
+    }
+    .terminal-border::before,
+    .terminal-border::after {
+        display: none;
+    }
+}
+
+/* Scanner Avatar Target - Enhanced */
+.scanner-target {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 15px;
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    padding: 5px;
+    background: rgba(0, 40, 0, 0.2);
+}
+
+.scanner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.2) brightness(0.9) sepia(1) hue-rotate(60deg) saturate(4);
+    border: 1px solid #00ff00;
+}
+
+/* Forms - Better integration */
+.input-group-text {
+    background: rgba(0, 40, 0, 0.5) !important;
+    border: 1px solid #004400 !important;
+    color: #00ff00 !important;
+    border-radius: 0 !important;
+}
+
+.form-text {
+    color: #008800 !important;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+}
+
+hr {
+    border-top: 1px solid rgba(0, 255, 0, 0.2) !important;
+    margin: 1.5rem 0;
+}
+
+/* Animations */
+.content {
+    /* Flicker removed for better readability */
+    opacity: 1;
+}
