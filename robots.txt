@@ -1,0 +1,203 @@
+# ============================================
+# ملف robots.txt لموقع Onion - متكامل 2026
+# ============================================
+
+# ------------------------------
+# 1️⃣ تعليمات عامة للجميع
+# ------------------------------
+User-agent: *
+Disallow: /admin/
+Disallow: /private/
+Disallow: /hidden/
+Disallow: /backup/
+Disallow: /temp/
+Disallow: /tmp/
+Disallow: /cache/
+Disallow: /api/
+Disallow: /img/
+Disallow: /css/
+Disallow: /logs/
+Disallow: /database/
+Disallow: /config/
+Disallow: /includes/
+Disallow: /README.txt
+Disallow: /CHANGELOG.txt
+Disallow: /LICENSE.txt
+Disallow: /.env
+Disallow: /.git/
+Disallow: /.htaccess
+Allow: /
+
+# ------------------------------
+# 2️⃣ محركات بحث Onion
+# ------------------------------
+User-agent: Ahmia
+Crawl-delay: 3
+Allow: /
+
+User-agent: Abyss
+Crawl-delay: 3
+Allow: /
+
+User-agent: Torch
+Crawl-delay: 4
+Allow: /
+
+User-agent: Haystak
+Crawl-delay: 3
+Allow: /
+
+User-agent: NotEvil
+Crawl-delay: 3
+Allow: /
+
+User-agent: DarkSearch
+Crawl-delay: 3
+Allow: /
+
+User-agent: OnionLand
+Crawl-delay: 3
+Allow: /
+
+User-agent: Tor66
+Crawl-delay: 3
+Allow: /
+
+User-agent: TorDex
+Crawl-delay: 3
+Allow: /
+
+User-agent: OnionFind
+Crawl-delay: 3
+Allow: /
+
+User-agent: DeepSearch
+Crawl-delay: 3
+Allow: /
+
+User-agent: Veilo
+Crawl-delay: 3
+Allow: /
+
+User-agent: GrowingOnions
+Crawl-delay: 3
+Allow: /
+
+User-agent: Excavator
+Crawl-delay: 3
+Allow: /
+
+User-agent: JustOnion
+Crawl-delay: 3
+Allow: /
+
+User-agent: OnionLinks
+Crawl-delay: 4
+Allow: /
+
+User-agent: VormWeb
+Crawl-delay: 3
+Allow: /
+
+User-agent: onionlandsearchengine
+Crawl-delay: 3
+Allow: /
+
+# ------------------------------
+# 3️⃣ محركات بحث رئيسية
+# ------------------------------
+User-agent: yacybot
+Crawl-delay: 5
+Allow: /
+
+User-agent: bingbot
+Crawl-delay: 3
+Allow: /
+
+User-agent: Baiduspider
+Crawl-delay: 4
+Allow: /
+
+User-agent: YandexBot
+Crawl-delay: 4
+Allow: /
+
+User-agent: DuckDuckBot
+Crawl-delay: 3
+Allow: /
+
+User-agent: DarkWebMon
+Crawl-delay: 3
+Allow: /
+
+User-agent: ShadowSearchBot
+Crawl-delay: 3
+Allow: /
+
+# ------------------------------
+# 4️⃣ بوتات التواصل الاجتماعي
+# ------------------------------
+User-agent: Twitterbot
+Crawl-delay: 2
+Allow: /
+
+User-agent: facebookexternalhit
+Crawl-delay: 2
+Allow: /
+
+User-agent: LinkedInBot
+Crawl-delay: 2
+Allow: /
+# ------------------------------
+# 5️⃣ بوتات الذكاء الاصطناعي (محظورة)
+# ------------------------------
+User-agent: GPTBot
+Disallow: /
+
+User-agent: aiohttp
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Googlebot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: codex-async-head
+Disallow: /
+
+# ------------------------------
+# 6️⃣ بوتات سيئة (محظورة)
+# ------------------------------
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+# ------------------------------
+# 7️⃣ خريطة الموقع
+# ------------------------------
+Sitemap: http://trzjmgy54a2kry3dsqvpiyutr34xgffnhrgd7okmpky2qaoqbyfovfyd.onion/sitemap.xml
+
