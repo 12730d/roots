@@ -1,8 +1,32 @@
 # 🌱 ROOTS
 
-&gt; Professional subscription-based data & file management platform built with pure PHP.
+![PHP](https://img.shields.io/badge/PHP-%3E%3D8.1-777BB4?logo=php&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-MySQLi-4479A1?logo=mysql&logoColor=white)
+![License](https://img.shields.io/badge/License-Proprietary-red)
+
+> Professional subscription-based data & file management platform built with pure PHP.
 
 ROOTS is a full-featured web application that combines user subscriptions, a points-based economy, purchase record management, an admin control panel, and a Drone Face Scanner API — all built on a modern, namespaced PHP architecture.
+
+<p align="center">
+  <img src="img/welcome.png" alt="ROOTS Welcome Page" width="820" style="max-width: 100%; border-radius: 10px;">
+  <br>
+  <em>ROOTS — welcome & dashboard experience</em>
+</p>
+
+---
+
+## 🧅 Onion Services
+
+The platform auto-detects `.onion` hosts and adjusts its security policy accordingly. The original production version is also reachable via Tor:
+
+| Network | Address |
+|---------|---------|
+| 🌐 Clearnet | `https://your-domain.com` |
+| 🧅 Tor / Onion | `http://REPLACE_WITH_YOUR_ONION_ADDRESS.onion` |
+| 🧅 Tor (Mirror) | `http://REPLACE_WITH_YOUR_MIRROR_ONION_ADDRESS.onion` |
+
+> ⚠️ Replace the placeholder `.onion` addresses above with your real v3 onion addresses before publishing.
 
 ---
 
@@ -47,13 +71,26 @@ ROOTS is a full-featured web application that combines user subscriptions, a poi
 - AES-256-GCM encryption for sensitive data
 - Full documentation: [`docs/drone-api-documentation.md`](docs/drone-api-documentation.md)
 
+
+## 📑 Table of Contents
+
+- [Features](#-features)
+- [Onion Services](#-onion-services)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Getting Started](#-getting-started)
+- [Documentation](#-documentation)
+- [Development](#-development)
+- [Disclaimer](#️-disclaimer)
+- [License](#-license)
+
 ---
 
 ## 🧱 Tech Stack
 
 | Layer      | Technology |
 |------------|------------|
-| Language   | PHP &gt;= 8.1 |
+| Language   | PHP >= 8.1 |
 | Database   | MySQL (MySQLi) |
 | Packages   | Composer — `gregwar/captcha`, `php-mcp/server` |
 | Dev tools  | PHPStan, PHPUnit |
@@ -159,4 +196,4 @@ Proprietary — see `composer.json`. All rights reserved.
 
 ---
 
-&lt;p align="center"&gt;🌱 &lt;b&gt;ROOTS&lt;/b&gt; — grow your data platform from the root.&lt;/p&gt;
+<p align="center">🌱 <b>ROOTS</b> — grow your data platform from the root.</p>
