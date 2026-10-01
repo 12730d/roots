@@ -25,8 +25,6 @@ The platform auto-detects `.onion` hosts and adjusts its security policy accordi
 | 🧅 Tor / Onion | `http://trzjmgy54a2kry3dsqvpiyutr34xgffnhrgd7okmpky2qaoqbyfovfyd.onion` |
 | 🧅 Tor (Mirror) | `http://2sr6wopzfn7vzuyj7n4ixraquuquwbdf5a4j537bzgrjiikdtua65lad.onion` |
 | 🧅 Tor (Mirror) | `http://cs7c6d3ldh6iqonevbyzhr74wyenkljleyztirzfbn5l6pasdku6xdad.onion` |
-| 🧅 Tor (Mirror) | `http://se76pjkoagwczvjtz26ivdtwfiliov4ncjm7f5ab5ai4k5jsmqnumjid.onion` |
-| 🧅 Tor (Mirror) | `http://63ayf6w7bjy4r5eofhntrlksuztr2wlrapyce7wuk32zpv5l7hdy64id.onion` |
 
 
 > ⚠️ Replace the placeholder `.onion` addresses above with your real v3 onion addresses before publishing.
