@@ -1,0 +1,609 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ROOTS\Security;
+
+use mysqli;
+use Exception;
+
+/**
+ * RateLimiter
+ *
+ * Handles IP-based rate limiting to prevent brute force attacks
+ * Supports automatic blocking and exponential backoff
+ */
+class RateLimiter
+{
+    private mysqli $db;
+    private SecurityLogger $logger;
+
+    /**
+     * Default configuration
+     */
+    private int $maxAttempts = 10;
+    private int $blockDurationMinutes = 60;
+    private int $windowMinutes = 15;
+    private bool $enableExponentialBackoff = true;
+
+    /**
+     * Constructor
+     *
+     * @param mysqli $db Database connection
+     * @param SecurityLogger|null $logger Security logger
+     */
+    public function __construct(mysqli $db, ?SecurityLogger $logger = null)
+    {
+        $this->db = $db;
+        $this->logger = $logger ?? new SecurityLogger($db);
+
+        // Load configuration from database if available
+        $this->loadConfiguration();
+    }
+
+    /**
+     * Check if IP is blocked
+     *
+     * @param string $ipAddress IP address to check
+     * @return array ['blocked' => bool, 'blocked_until' => string|null, 'remaining_time' => int]
+     */
+    public function isBlocked(string $ipAddress): array
+    {
+        // Clean up expired blocks first
+        $this->resetExpiredBlocks();
+
+        $stmt = $this->db->prepare(
+            "SELECT blocked_until, failed_attempts, total_blocks
+            FROM ip_rate_limits
+            WHERE ip_address = ? AND blocked_until > NOW()
+            LIMIT 1",
+        );
+
+        if (!$stmt) {
+            return [
+                "blocked" => false,
+                "blocked_until" => null,
+                "remaining_time" => 0,
+            ];
+        }
+
+        $stmt->bind_param("s", $ipAddress);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($row) {
+            $blockedUntil = $row["blocked_until"];
+            $remainingTime = strtotime($blockedUntil) - time();
+
+            return [
+                "blocked" => true,
+                "blocked_until" => $blockedUntil,
+                "remaining_time" => max(0, $remainingTime),
+            ];
+        }
+
+        return [
+            "blocked" => false,
+            "blocked_until" => null,
+            "remaining_time" => 0,
+        ];
+    }
+
+    /**
+     * Record failed attempt
+     *
+     * @param string $ipAddress IP address
+     * @param string|null $username Username (optional)
+     * @return array ['blocked' => bool, 'attempts' => int, 'blocked_until' => string|null]
+     */
+    public function recordFailedAttempt(
+        string $ipAddress,
+        ?string $username = null,
+    ): array {
+        $this->db->begin_transaction();
+
+        try {
+            // Get or create IP record
+            $stmt = $this->db->prepare(
+                "SELECT id, failed_attempts, total_blocks, first_attempt
+                FROM ip_rate_limits
+                WHERE ip_address = ?
+                LIMIT 1",
+            );
+
+            if (!$stmt) {
+                throw new Exception("Failed to prepare select statement");
+            }
+
+            $stmt->bind_param("s", $ipAddress);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $existing = $result->fetch_assoc();
+            $stmt->close();
+
+            $failedAttempts = 0;
+            $totalBlocks = 0;
+            $shouldBlock = false;
+            $blockedUntil = null;
+
+            if ($existing) {
+                // Update existing record
+                $failedAttempts = $existing["failed_attempts"] + 1;
+                $totalBlocks = $existing["total_blocks"];
+
+                // Check if should block
+                if ($failedAttempts >= $this->maxAttempts) {
+                    $shouldBlock = true;
+                    $totalBlocks++;
+
+                    // Calculate block duration (exponential backoff)
+                    $blockMinutes = $this->calculateBlockDuration($totalBlocks);
+                    $blockedUntil = date(
+                        "Y-m-d H:i:s",
+                        time() + $blockMinutes * 60,
+                    );
+
+                    $updateStmt = $this->db->prepare(
+                        "UPDATE ip_rate_limits
+                        SET failed_attempts = ?,
+                            blocked_until = ?,
+                            total_blocks = ?,
+                            last_attempt = NOW()
+                        WHERE ip_address = ?",
+                    );
+
+                    if (!$updateStmt) {
+                        throw new Exception(
+                            "Failed to prepare update statement",
+                        );
+                    }
+
+                    $updateStmt->bind_param(
+                        "isis",
+                        $failedAttempts,
+                        $blockedUntil,
+                        $totalBlocks,
+                        $ipAddress,
+                    );
+                    $updateStmt->execute();
+                    $updateStmt->close();
+
+                    // Log the block
+                    $this->logger->logRateLimitExceeded(
+                        $ipAddress,
+                        $failedAttempts,
+                        $username,
+                    );
+                } else {
+                    // Just increment attempts
+                    $updateStmt = $this->db->prepare(
+                        "UPDATE ip_rate_limits
+                        SET failed_attempts = ?,
+                            last_attempt = NOW()
+                        WHERE ip_address = ?",
+                    );
+
+                    if (!$updateStmt) {
+                        throw new Exception(
+                            "Failed to prepare update statement",
+                        );
+                    }
+
+                    $updateStmt->bind_param("is", $failedAttempts, $ipAddress);
+                    $updateStmt->execute();
+                    $updateStmt->close();
+                }
+            } else {
+                // Create new record
+                $failedAttempts = 1;
+
+                $insertStmt = $this->db->prepare(
+                    "INSERT INTO ip_rate_limits
+                    (ip_address, failed_attempts, first_attempt, last_attempt)
+                    VALUES (?, 1, NOW(), NOW())",
+                );
+
+                if (!$insertStmt) {
+                    throw new Exception("Failed to prepare insert statement");
+                }
+
+                $insertStmt->bind_param("s", $ipAddress);
+                $insertStmt->execute();
+                $insertStmt->close();
+            }
+
+            $this->db->commit();
+
+            return [
+                "blocked" => $shouldBlock,
+                "attempts" => $failedAttempts,
+                "blocked_until" => $blockedUntil,
+                "max_attempts" => $this->maxAttempts,
+            ];
+        } catch (Exception $e) {
+            $this->db->rollback();
+            error_log("RateLimiter error: " . $e->getMessage());
+
+            return [
+                "blocked" => false,
+                "attempts" => 0,
+                "blocked_until" => null,
+            ];
+        }
+    }
+
+    /**
+     * Reset failed attempts for IP (after successful login)
+     *
+     * @param string $ipAddress IP address
+     * @return bool Success status
+     */
+    public function resetAttempts(string $ipAddress): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE ip_rate_limits
+            SET failed_attempts = 0,
+                blocked_until = NULL
+            WHERE ip_address = ?",
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("s", $ipAddress);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+
+    /**
+     * Get remaining attempts before block
+     *
+     * @param string $ipAddress IP address
+     * @return int Remaining attempts
+     */
+    public function getRemainingAttempts(string $ipAddress): int
+    {
+        $stmt = $this->db->prepare(
+            "SELECT failed_attempts FROM ip_rate_limits
+            WHERE ip_address = ? AND (blocked_until IS NULL OR blocked_until < NOW())
+            LIMIT 1",
+        );
+
+        if (!$stmt) {
+            return $this->maxAttempts;
+        }
+
+        $stmt->bind_param("s", $ipAddress);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($row) {
+            $failedAttempts = (int) $row["failed_attempts"];
+            return max(0, $this->maxAttempts - $failedAttempts);
+        }
+
+        return $this->maxAttempts;
+    }
+
+    /**
+     * Get attempt statistics for IP
+     *
+     * @param string $ipAddress IP address
+     * @return array Statistics
+     */
+    public function getStatistics(string $ipAddress): array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT failed_attempts, blocked_until, total_blocks, first_attempt, last_attempt
+            FROM ip_rate_limits
+            WHERE ip_address = ?
+            LIMIT 1",
+        );
+
+        if (!$stmt) {
+            return [
+                "failed_attempts" => 0,
+                "remaining_attempts" => $this->maxAttempts,
+                "total_blocks" => 0,
+                "is_blocked" => false,
+                "blocked_until" => null,
+            ];
+        }
+
+        $stmt->bind_param("s", $ipAddress);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        if ($row) {
+            $isBlocked =
+                $row["blocked_until"] &&
+                strtotime($row["blocked_until"]) > time();
+            $failedAttempts = (int) $row["failed_attempts"];
+
+            return [
+                "failed_attempts" => $failedAttempts,
+                "remaining_attempts" => max(
+                    0,
+                    $this->maxAttempts - $failedAttempts,
+                ),
+                "total_blocks" => (int) $row["total_blocks"],
+                "is_blocked" => $isBlocked,
+                "blocked_until" => $row["blocked_until"],
+                "first_attempt" => $row["first_attempt"],
+                "last_attempt" => $row["last_attempt"],
+            ];
+        }
+
+        return [
+            "failed_attempts" => 0,
+            "remaining_attempts" => $this->maxAttempts,
+            "total_blocks" => 0,
+            "is_blocked" => false,
+            "blocked_until" => null,
+        ];
+    }
+
+    /**
+     * Manually block an IP address
+     *
+     * @param string $ipAddress IP address
+     * @param int $durationMinutes Block duration in minutes
+     * @param string|null $reason Block reason
+     * @return bool Success status
+     */
+    public function blockIp(
+        string $ipAddress,
+        int $durationMinutes = 1440,
+        ?string $reason = null,
+    ): bool {
+        $blockedUntil = date("Y-m-d H:i:s", time() + $durationMinutes * 60);
+
+        $stmt = $this->db->prepare(
+            "INSERT INTO ip_rate_limits
+            (ip_address, failed_attempts, blocked_until, total_blocks, first_attempt, last_attempt)
+            VALUES (?, 999, ?, 999, NOW(), NOW())
+            ON DUPLICATE KEY UPDATE
+            blocked_until = VALUES(blocked_until),
+            failed_attempts = VALUES(failed_attempts),
+            total_blocks = total_blocks + 1",
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $stmt->bind_param("ss", $ipAddress, $blockedUntil);
+        $result = $stmt->execute();
+        $stmt->close();
+
+        if ($result && $reason) {
+            $this->logger->log(
+                SecurityLogger::EVENT_LOGIN_BLOCKED,
+                SecurityLogger::SEVERITY_HIGH,
+                null,
+                null,
+                "IP $ipAddress manually blocked: $reason",
+                [
+                    "ip" => $ipAddress,
+                    "duration_minutes" => $durationMinutes,
+                    "reason" => $reason,
+                ],
+            );
+        }
+
+        return $result;
+    }
+
+    /**
+     * Unblock an IP address
+     *
+     * @param string $ipAddress IP address
+     * @return bool Success status
+     */
+    public function unblockIp(string $ipAddress): bool
+    {
+        return $this->resetAttempts($ipAddress);
+    }
+
+    /**
+     * Check if IP has suspicious activity
+     *
+     * @param string $ipAddress IP address
+     * @return array ['suspicious' => bool, 'reasons' => array]
+     */
+    public function checkSuspiciousActivity(string $ipAddress): array
+    {
+        $reasons = [];
+
+        // Check rapid attempts
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(*) as count FROM login_attempts
+            WHERE ip_address = ?
+            AND attempted_at > DATE_SUB(NOW(), INTERVAL 5 MINUTE)",
+        );
+
+        if ($stmt) {
+            $stmt->bind_param("s", $ipAddress);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            if ($row && $row["count"] > 20) {
+                $reasons[] = "Excessive login attempts in short time";
+            }
+        }
+
+        // Check multiple usernames
+        $stmt = $this->db->prepare(
+            "SELECT COUNT(DISTINCT username) as count FROM login_attempts
+            WHERE ip_address = ?
+            AND attempted_at > DATE_SUB(NOW(), INTERVAL 1 HOUR)",
+        );
+
+        if ($stmt) {
+            $stmt->bind_param("s", $ipAddress);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            $stmt->close();
+
+            if ($row && $row["count"] > 10) {
+                $reasons[] = "Attempted multiple different usernames";
+            }
+        }
+
+        return [
+            "suspicious" => !empty($reasons),
+            "reasons" => $reasons,
+        ];
+    }
+
+    /**
+     * Calculate block duration with exponential backoff
+     *
+     * @param int $totalBlocks Total number of blocks
+     * @return int Block duration in minutes
+     */
+    private function calculateBlockDuration(int $totalBlocks): int
+    {
+        if (!$this->enableExponentialBackoff) {
+            return $this->blockDurationMinutes;
+        }
+
+        // Exponential backoff: base * 2^(totalBlocks-1)
+        // Cap at 24 hours
+        $duration = $this->blockDurationMinutes * pow(2, $totalBlocks - 1);
+        return min((int) $duration, 1440); // Max 24 hours
+    }
+
+    /**
+     * Reset expired blocks
+     *
+     * @return bool Success status
+     */
+    private function resetExpiredBlocks(): bool
+    {
+        $stmt = $this->db->prepare(
+            "UPDATE ip_rate_limits
+            SET failed_attempts = 0, blocked_until = NULL
+            WHERE blocked_until IS NOT NULL AND blocked_until < NOW()",
+        );
+
+        if (!$stmt) {
+            return false;
+        }
+
+        $result = $stmt->execute();
+        $stmt->close();
+
+        return $result;
+    }
+
+    /**
+     * Load configuration from database
+     *
+     * @return void
+     */
+    private function loadConfiguration(): void
+    {
+        $stmt = $this->db->prepare(
+            "SELECT config_key, config_value, config_type FROM security_config
+            WHERE config_key IN ('ip_max_attempts', 'ip_block_duration_minutes', 'enable_ip_rate_limiting')",
+        );
+
+        if (!$stmt) {
+            return;
+        }
+
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        while ($row = $result->fetch_assoc()) {
+            $key = $row["config_key"];
+            $value = $row["config_value"];
+
+            switch ($key) {
+                case "ip_max_attempts":
+                    $this->maxAttempts = (int) $value;
+                    break;
+                case "ip_block_duration_minutes":
+                    $this->blockDurationMinutes = (int) $value;
+                    break;
+            }
+        }
+
+        $stmt->close();
+    }
+
+    /**
+     * Set configuration
+     *
+     * @param int $maxAttempts Maximum attempts before block
+     * @param int $blockDurationMinutes Block duration in minutes
+     * @param bool $enableExponentialBackoff Enable exponential backoff
+     * @return void
+     */
+    public function setConfiguration(
+        int $maxAttempts,
+        int $blockDurationMinutes,
+        bool $enableExponentialBackoff = true,
+    ): void {
+        $this->maxAttempts = $maxAttempts;
+        $this->blockDurationMinutes = $blockDurationMinutes;
+        $this->enableExponentialBackoff = $enableExponentialBackoff;
+    }
+
+    /**
+     * Get configuration
+     *
+     * @return array Configuration
+     */
+    public function getConfiguration(): array
+    {
+        return [
+            "max_attempts" => $this->maxAttempts,
+            "block_duration_minutes" => $this->blockDurationMinutes,
+            "window_minutes" => $this->windowMinutes,
+            "enable_exponential_backoff" => $this->enableExponentialBackoff,
+        ];
+    }
+}
+
+    /**
+     * Get detailed block information for an IP address
+     * 
+     * @param string $ipAddress IP address to check
+     * @return array|null Block information or null if not blocked
+     */
+    public function getBlockInfo(string $ipAddress): ?array
+    {
+        $stmt = $this->db->prepare(
+            "SELECT failed_attempts, blocked_until, total_blocks, first_attempt, last_attempt
+            FROM ip_rate_limits
+            WHERE ip_address = ? AND blocked_until > NOW()
+            LIMIT 1"
+        );
+
+        if (!$stmt) {
+            return null;
+        }
+
+        $stmt->bind_param("s", $ipAddress);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        $stmt->close();
+
+        return $row ?: null;
+    }
+}
